@@ -12,11 +12,15 @@ public class PersonController {
     private static Logger log = LoggerFactory.getLogger(PersonController.class);
     
     private final PersonCrudService personCrudService;
+
     private final AddressCrudService addressCrudService;
+
+    private final PersonAgentService personAgentService;
     
-    public PersonController(PersonCrudService personCrudService, AddressCrudService addressCrudService) {
+    public PersonController(PersonCrudService personCrudService, AddressCrudService addressCrudService, PersonAgentService personAgentService) {
         this.personCrudService = personCrudService;
         this.addressCrudService = addressCrudService;
+        this.personAgentService = personAgentService;
     }
     
     @GetMapping("/person/{id}")
