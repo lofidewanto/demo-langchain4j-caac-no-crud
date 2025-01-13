@@ -7,26 +7,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class PersonController {
+public class CustomerController {
     
-    private static Logger log = LoggerFactory.getLogger(PersonController.class);
+    private static Logger log = LoggerFactory.getLogger(CustomerController.class);
     
-    private final PersonCrudService personCrudService;
+    private final CustomerCrudService customerCrudService;
 
     private final AddressCrudService addressCrudService;
 
-    private final PersonAgentService personAgentService;
+    private final CustomerAgentService customerAgentService;
     
-    public PersonController(PersonCrudService personCrudService, AddressCrudService addressCrudService, PersonAgentService personAgentService) {
-        this.personCrudService = personCrudService;
+    public CustomerController(CustomerCrudService customerCrudService, AddressCrudService addressCrudService, CustomerAgentService customerAgentService) {
+        this.customerCrudService = customerCrudService;
         this.addressCrudService = addressCrudService;
-        this.personAgentService = personAgentService;
+        this.customerAgentService = customerAgentService;
     }
     
-    @GetMapping("/person/{id}")
-    public Person getPerson(@PathVariable Long id) {
-        log.debug("Getting person with id: {}", id);
-        return personCrudService.getPerson(id);
+    @GetMapping("/customer/{id}")
+    public Customer getCustomer(@PathVariable Long id) {
+        log.debug("Getting customer with id: {}", id);
+        return customerCrudService.getCustomer(id);
     }
 
 }

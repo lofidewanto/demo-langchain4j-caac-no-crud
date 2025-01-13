@@ -30,8 +30,8 @@ public class Address {
     private String zipCode;
 
     @ManyToOne
-    @JoinColumn(name = "person_id", nullable = false)
-    private Person person;
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
     public Address() {
     }
@@ -83,12 +83,12 @@ public class Address {
         this.zipCode = zipCode;
     }
 
-    public Person getPerson() {
-        return person;
+    public Customer getPerson() {
+        return customer;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPerson(Customer customer) {
+        this.customer = customer;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class Address {
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
                 ", zipCode='" + zipCode + '\'' +
-                ", person=" + person +
+                ", customer=" + customer +
                 '}';
     }
 

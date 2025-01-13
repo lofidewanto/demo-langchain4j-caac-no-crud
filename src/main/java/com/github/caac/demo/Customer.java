@@ -13,8 +13,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 
 @Entity
-@Table(name = "person")
-public class Person {
+@Table(name = "customer")
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,13 +30,13 @@ public class Person {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses;
 
-    public Person() {
+    public Customer() {
     }
 
-    public Person(String name, int age) {
+    public Customer(String name, int age) {
         this.name = name;
         this.age = age;
     }
@@ -83,7 +83,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Customer{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +
@@ -98,12 +98,12 @@ public class Person {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        Person person = (Person) o;
+        Customer customer = (Customer) o;
 
-        if (age != person.age)
+        if (age != customer.age)
             return false;
-        if (name != null ? !name.equals(person.name) : person.name != null)
+        if (name != null ? !name.equals(customer.name) : customer.name != null)
             return false;
-        return email != null ? email.equals(person.email) : person.email == null;
+        return email != null ? email.equals(customer.email) : customer.email == null;
     }
 }

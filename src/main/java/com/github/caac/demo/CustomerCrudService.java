@@ -8,32 +8,32 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
-public class PersonCrudService {
+public class CustomerCrudService {
     
-    private PersonRepository personRepository;
+    private CustomerRepository customerRepository;
 
-    public PersonCrudService(PersonRepository personRepository) {
-        this.personRepository = personRepository;
+    public CustomerCrudService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
     
     @Transactional(readOnly = true)
-    public Person getPerson(Long id) {
-        Optional<Person> person = personRepository.findById(id);
+    public Customer getCustomer(Long id) {
+        Optional<Customer> person = customerRepository.findById(id);
         return person.orElse(null);
     }
 
     @Transactional
     @Validated
-    public Person createPerson(Person person) {
-        return personRepository.save(person);
+    public Customer createPerson(Customer customer) {
+        return customerRepository.save(customer);
     }
 
     @Transactional
     @Validated
-    public Person createPersonWithAddress(Person person, List<Address> addresses) {
-        person.setAddresses(addresses);
-        addresses.forEach(address -> address.setPerson(person));
+    public Customer createCustomerWithAddress(Customer customer, List<Address> addresses) {
+        customer.setAddresses(addresses);
+        addresses.forEach(address -> address.setPerson(customer));
 
-        return personRepository.save(person);
+        return customerRepository.save(customer);
     }
 }

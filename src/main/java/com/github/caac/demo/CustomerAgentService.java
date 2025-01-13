@@ -7,7 +7,7 @@ import dev.langchain4j.service.spring.AiService;
 import reactor.core.publisher.Flux;
 
 @AiService
-public interface PersonAgentService {
+public interface CustomerAgentService {
 
     @SystemMessage("""
             You are a customer chat support agent of an airline named "Funnair".

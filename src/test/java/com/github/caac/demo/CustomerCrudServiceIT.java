@@ -9,39 +9,39 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.ConstraintViolationException;
 
 @SpringBootTest
-public class PersonCrudServiceIT {
+class CustomerCrudServiceIT {
 
     @Autowired
-    private PersonCrudService personCrudService;
+    private CustomerCrudService customerCrudService;
 
     @Autowired
-    private PersonRepository personRepository;
+    private CustomerRepository customerRepository;
 
     @Test
     @Transactional
-    public void create_person_with_email() {
-        Person person = new Person();
-        person.setName("John Doe");
-        person.setAge(30);
-        person.setEmail("john.doe@example.com");
+    void create_customer_with_email() {
+        Customer customer = new Customer();
+        customer.setName("John Doe");
+        customer.setAge(30);
+        customer.setEmail("john.doe@example.com");
 
-        Person result = personCrudService.createPerson(person);
+        Customer result = customerCrudService.createPerson(customer);
 
         assertNotNull(result);
         assertEquals("john.doe@example.com", result.getEmail());
-        assertTrue(personRepository.findById(result.getId()).isPresent());
+        assertTrue(customerRepository.findById(result.getId()).isPresent());
     }
 
     @Test
     @Transactional
-    public void create_person_with_invalid_email() {
-        Person person = new Person();
-        person.setName("Jane Doe");
-        person.setAge(25);
-        person.setEmail("invalid-email");
+    void create_customer_with_invalid_email() {
+        Customer customer = new Customer();
+        customer.setName("Jane Doe");
+        customer.setAge(25);
+        customer.setEmail("invalid-email");
 
         Exception exception = assertThrows(ConstraintViolationException.class, () -> {
-            personCrudService.createPerson(person);
+            customerCrudService.createPerson(customer);
         });
 
         System.out.println(exception.getMessage());

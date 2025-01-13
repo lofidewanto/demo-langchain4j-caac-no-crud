@@ -7,13 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AddressCrudService {
-    
+
     private AddressRepository addressRepository;
 
     public AddressCrudService(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
     }
-    
+
     @Transactional(readOnly = true)
     public Address getAddress(Long id) {
         Optional<Address> address = addressRepository.findById(id);
