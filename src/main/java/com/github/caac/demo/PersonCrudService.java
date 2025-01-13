@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 public class PersonCrudService {
@@ -22,7 +23,7 @@ public class PersonCrudService {
     }
 
     @Transactional
-    public Person createPerson(Person person) {
+    public Person createPerson(@Validated Person person) {
         return personRepository.save(person);
     }
 
@@ -30,6 +31,7 @@ public class PersonCrudService {
     public Person createPersonWithAddress(Person person, List<Address> addresses) {
         person.setAddresses(addresses);
         addresses.forEach(address -> address.setPerson(person));
+
         return personRepository.save(person);
     }
 }

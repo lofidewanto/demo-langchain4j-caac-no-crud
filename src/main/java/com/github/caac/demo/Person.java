@@ -10,30 +10,43 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "person")
 public class Person {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String name;
-    
+
     @Column(nullable = false)
     private int age;
+
+    @Email(message = "Email should be valid.")
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses;
 
     public Person() {
     }
-    
+
     public Person(String name, int age) {
         this.name = name;
         this.age = age;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -52,6 +65,14 @@ public class Person {
         this.age = age;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public List<Address> getAddresses() {
         return addresses;
     }
@@ -65,18 +86,24 @@ public class Person {
         return "Person{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
+                ", email='" + email + '\'' +
                 ", addresses=" + addresses +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Person person = (Person) o;
 
-        if (age != person.age) return false;
-        return name != null ? name.equals(person.name) : person.name == null;
+        if (age != person.age)
+            return false;
+        if (name != null ? !name.equals(person.name) : person.name != null)
+            return false;
+        return email != null ? email.equals(person.email) : person.email == null;
     }
 }
