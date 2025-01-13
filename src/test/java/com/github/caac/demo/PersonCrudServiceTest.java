@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -71,5 +70,4 @@ public class PersonCrudServiceTest {
         assertEquals("test@example.com", result.getEmail());
         verify(personRepository, times(1)).save(person);
     }
-
 }

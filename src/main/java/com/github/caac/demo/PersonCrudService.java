@@ -31,7 +31,6 @@ public class PersonCrudService {
     @Transactional
     @Validated
     public Person createPersonWithAddress(Person person, List<Address> addresses) {
-        // Create a person only with some addresses
         person.setAddresses(addresses);
         addresses.forEach(address -> address.setPerson(person));
 
