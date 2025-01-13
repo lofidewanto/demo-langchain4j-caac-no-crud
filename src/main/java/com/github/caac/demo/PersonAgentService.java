@@ -1,7 +1,5 @@
 package com.github.caac.demo;
 
-import org.springframework.stereotype.Service;
-
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
