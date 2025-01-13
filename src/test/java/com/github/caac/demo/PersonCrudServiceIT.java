@@ -40,8 +40,10 @@ public class PersonCrudServiceIT {
         person.setAge(25);
         person.setEmail("invalid-email");
 
-        assertThrows(ConstraintViolationException.class, () -> {
+        Exception exception = assertThrows(ConstraintViolationException.class, () -> {
             personCrudService.createPerson(person);
         });
+
+        System.out.println(exception.getMessage());
     }
 }

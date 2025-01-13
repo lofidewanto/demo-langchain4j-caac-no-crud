@@ -23,12 +23,15 @@ public class PersonCrudService {
     }
 
     @Transactional
-    public Person createPerson(@Validated Person person) {
+    @Validated
+    public Person createPerson(Person person) {
         return personRepository.save(person);
     }
 
     @Transactional
+    @Validated
     public Person createPersonWithAddress(Person person, List<Address> addresses) {
+        // Create a person only with some addresses
         person.setAddresses(addresses);
         addresses.forEach(address -> address.setPerson(person));
 
