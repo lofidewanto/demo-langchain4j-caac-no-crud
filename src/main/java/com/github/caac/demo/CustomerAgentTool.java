@@ -1,17 +1,15 @@
 package com.github.caac.demo;
 
-import dev.langchain4j.agent.tool.P;
-import dev.langchain4j.agent.tool.Tool;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import dev.langchain4j.agent.tool.Tool;
 
 @Component
-public class LangChain4jTools {
+public class CustomerAgentTool {
 
     private final CustomerRepository customerRepository;
 
-    public LangChain4jTools(CustomerRepository service) {
+    public CustomerAgentTool(CustomerRepository service) {
         this.customerRepository = service;
     }
 
