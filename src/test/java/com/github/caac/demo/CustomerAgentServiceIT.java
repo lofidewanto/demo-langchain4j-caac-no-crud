@@ -17,6 +17,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.ollama.OllamaContainer;
+import org.testcontainers.utility.MountableFile;
 
 @SpringBootTest
 class CustomerAgentServiceIT {
@@ -28,13 +29,24 @@ class CustomerAgentServiceIT {
 
     private static int portOllama = 11434;
 
+    private String payload = "{ \"model\": \"llama3.2\" }";
+
+    private static String image = "ollama/ollama";
+
+    private static String httpAddress = "http://localhost:";
+
     @SuppressWarnings("resource")
     @BeforeAll
     static void setUp() {
-        ollamaContainer = new OllamaContainer("ollama/ollama")
+        ollamaContainer = new OllamaContainer(image)
                 .withExposedPorts(portOllama)
-                .waitingFor(Wait.forListeningPort());
-
+                .waitingFor(Wait.forListeningPort())
+                .withCommand("serve")
+                .withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
+                        .withMemory(7L * 1024 * 1024 * 1024))
+                .withCopyFileToContainer(
+                        MountableFile.forHostPath("target/ollama-models"),
+                        "/var/lib/ollama/models");
         ollamaContainer.start();
     }
 
@@ -43,7 +55,7 @@ class CustomerAgentServiceIT {
         String ollamaHost = ollamaContainer.getHost();
         Integer ollamaPort = ollamaContainer.getMappedPort(portOllama);
 
-        String baseUrl = "http://localhost:" + ollamaPort;
+        String baseUrl = httpAddress + ollamaPort;
 
         System.out.println("Ollama is running on: " + ollamaHost + ":" + ollamaPort);
         assertTrue(ollamaHost != null && ollamaPort != null);
@@ -60,7 +72,7 @@ class CustomerAgentServiceIT {
 
     void verifyModel() throws Exception {
         int ollamaPort = ollamaContainer.getMappedPort(portOllama);
-        String baseUrl = "http://localhost:" + ollamaPort;
+        String baseUrl = httpAddress + ollamaPort;
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest listRequest = HttpRequest.newBuilder()
@@ -69,18 +81,17 @@ class CustomerAgentServiceIT {
                 .build();
 
         HttpResponse<String> listResponse = client.send(listRequest, HttpResponse.BodyHandlers.ofString());
-        
+
         System.out.println("Available models: " + listResponse.body());
     }
 
     @Test
     void pull_llama_model() throws Exception {
         int ollamaPort = ollamaContainer.getMappedPort(portOllama);
-        String baseUrl = "http://localhost:" + ollamaPort;
+        String baseUrl = httpAddress + ollamaPort;
 
         HttpClient client = HttpClient.newHttpClient();
 
-        String payload = "{ \"model\": \"llama3.1\" }";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseUrl + "/api/pull"))
                 .header("Content-Type", "application/json")
@@ -90,7 +101,7 @@ class CustomerAgentServiceIT {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() == 200) {
-            System.out.println("Successfully pulled Llama 3.1 model.");
+            System.out.println("Successfully pulled Llama 3.x model.");
         } else {
             throw new RuntimeException("Failed to pull model: " + response.body());
         }
@@ -100,11 +111,13 @@ class CustomerAgentServiceIT {
 
     @Test
     void show_all_models() throws Exception {
-        
+        verifyModel();
     }
 
     @Test
-    void simple_chat() {
+    void simple_chat() throws Exception {
+        pull_llama_model();
+
         String chatId = "test-chat-id";
         String userMessage = "I would like to change my booking.";
 
