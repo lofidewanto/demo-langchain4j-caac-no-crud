@@ -1,10 +1,7 @@
 package com.github.caac.demo;
 
-import org.springframework.stereotype.Component;
-
 import dev.langchain4j.agent.tool.Tool;
 
-@Component
 public class CustomerAgentTool {
 
     private final CustomerRepository customerRepository;
