@@ -33,14 +33,13 @@ class CustomerAgentServiceIT {
     static void setUp() {
         ollamaContainer = new OllamaContainer("ollama/ollama")
                 .withExposedPorts(portOllama)
-                .waitingFor(Wait.forListeningPort())
-                .withCommand("serve");
+                .waitingFor(Wait.forListeningPort());
 
         ollamaContainer.start();
     }
 
     @DynamicPropertySource
-    static void redisProperties(DynamicPropertyRegistry registry) {
+    static void langChain4jProperties(DynamicPropertyRegistry registry) {
         String ollamaHost = ollamaContainer.getHost();
         Integer ollamaPort = ollamaContainer.getMappedPort(portOllama);
 
@@ -59,62 +58,35 @@ class CustomerAgentServiceIT {
         }
     }
 
+    void verifyModel() throws Exception {
+        int ollamaPort = ollamaContainer.getMappedPort(portOllama);
+        String baseUrl = "http://localhost:" + ollamaPort;
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest listRequest = HttpRequest.newBuilder()
+                .uri(URI.create(baseUrl + "/api/tags"))
+                .GET()
+                .build();
+
+        HttpResponse<String> listResponse = client.send(listRequest, HttpResponse.BodyHandlers.ofString());
+        
+        System.out.println("Available models: " + listResponse.body());
+    }
+
     @Test
-    void downloadLlamaModel() throws Exception {
+    void pull_llama_model() throws Exception {
         int ollamaPort = ollamaContainer.getMappedPort(portOllama);
         String baseUrl = "http://localhost:" + ollamaPort;
 
         HttpClient client = HttpClient.newHttpClient();
 
         String payload = "{ \"model\": \"llama3.1\" }";
-        
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(baseUrl + "/download"))
+                .uri(URI.create(baseUrl + "/api/pull"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(payload))
                 .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        if (response.statusCode() == 200) {
-            System.out.println("Model Llama 3.1 downloaded successfully.");
-        } else {
-            throw new Exception("Failed to download the model: " + response.body());
-        }
-
-        verifyModel();
-    }
-
-    void verifyModel() throws Exception {
-        int ollamaPort = ollamaContainer.getMappedPort(portOllama);
-        String baseUrl = "http://localhost:" + ollamaPort;
-
-        HttpClient client = HttpClient.newHttpClient();
-        
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(baseUrl + "/models"))
-                .GET()
-                .build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
-        System.out.println("Available models: " + response.body());
-    }
-
-    @Test
-    void pullLlamaModel() throws Exception {
-        int ollamaPort = ollamaContainer.getMappedPort(portOllama);
-        String baseUrl = "http://localhost:" + ollamaPort;
-    
-        HttpClient client = HttpClient.newHttpClient();
-    
-        String payload = "{ \"model\": \"llama-3.1\" }";
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(baseUrl + "/pull"))
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(payload))
-                .build();
-    
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() == 200) {
@@ -122,6 +94,13 @@ class CustomerAgentServiceIT {
         } else {
             throw new RuntimeException("Failed to pull model: " + response.body());
         }
+
+        verifyModel();
+    }
+
+    @Test
+    void show_all_models() throws Exception {
+        
     }
 
     @Test
