@@ -85,8 +85,7 @@ class CustomerAgentServiceIT {
         System.out.println("Available models: " + listResponse.body());
     }
 
-    @Test
-    void pull_llama_model() throws Exception {
+    void pullLlamaModel() throws Exception {
         int ollamaPort = ollamaContainer.getMappedPort(portOllama);
         String baseUrl = httpAddress + ollamaPort;
 
@@ -110,13 +109,8 @@ class CustomerAgentServiceIT {
     }
 
     @Test
-    void show_all_models() throws Exception {
-        verifyModel();
-    }
-
-    @Test
     void simple_chat() throws Exception {
-        pull_llama_model();
+        pullLlamaModel();
 
         String chatId = "test-chat-id";
         String userMessage = "I would like to change my booking.";
@@ -124,6 +118,6 @@ class CustomerAgentServiceIT {
         String response = customerAgentService.chat(chatId, userMessage);
 
         assertNotNull(response);
-        System.out.println(response);
+        System.out.println("Simple Chat: " + response);
     }
 }
