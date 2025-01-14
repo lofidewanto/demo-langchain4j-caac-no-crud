@@ -19,6 +19,6 @@ class CustomerAgentServiceIT {
         String response = customerAgentService.chat(chatId, userMessage);
         
         assertNotNull(response);
-        // Additional assertions can be added here to validate the response
+        System.out.println(response);   
     }
 }
