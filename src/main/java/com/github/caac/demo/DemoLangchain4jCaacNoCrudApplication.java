@@ -24,7 +24,7 @@ public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         // Create a CRUD Customer Service.
         Customer customer = new Customer();
-        customer.setName("John Doe");
+        customer.setName("Brandy Doe");
         customer.setAge(40);
         customer.setEmail("john@gmail.com");
         customerCrudService.createCustomer(customer);
