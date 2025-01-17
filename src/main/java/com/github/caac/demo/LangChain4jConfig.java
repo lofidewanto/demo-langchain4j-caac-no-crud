@@ -1,5 +1,8 @@
 package com.github.caac.demo;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
@@ -9,17 +12,15 @@ import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class LangChain4jConfig {
 
     @Bean
-    CustomerAgentTool customerAgentTool(CustomerRepository customerRepository) {
+    CustomerAgentTool customerAgentTool(CustomerRepository customerRepository, AddressRepository addressRepository) {
         // @Component won't work, because it is too late to instrument the class.
         // Therefore we add the Component with @Bean
-        return new CustomerAgentTool(customerRepository);
+        return new CustomerAgentTool(customerRepository, addressRepository);
     }
 
     @Bean
