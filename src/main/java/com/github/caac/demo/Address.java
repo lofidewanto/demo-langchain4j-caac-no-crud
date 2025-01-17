@@ -83,11 +83,11 @@ public class Address {
         this.zipCode = zipCode;
     }
 
-    public Customer getPerson() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setPerson(Customer customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 

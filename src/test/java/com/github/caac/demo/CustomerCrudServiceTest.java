@@ -1,10 +1,15 @@
 package com.github.caac.demo;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -37,8 +42,8 @@ class CustomerCrudServiceTest {
 
         assertNotNull(result);
         assertEquals(2, result.getAddresses().size());
-        assertEquals(customer, address1.getPerson());
-        assertEquals(customer, address2.getPerson());
+        assertEquals(customer, address1.getCustomer());
+        assertEquals(customer, address2.getCustomer());
         verify(customerRepository, times(1)).save(customer);
     }
 
@@ -64,7 +69,7 @@ class CustomerCrudServiceTest {
 
         when(customerRepository.save(customer)).thenReturn(customer);
 
-        Customer result = customerCrudService.createPerson(customer);
+        Customer result = customerCrudService.createCustomer(customer);
 
         assertNotNull(result);
         assertEquals("test@example.com", result.getEmail());

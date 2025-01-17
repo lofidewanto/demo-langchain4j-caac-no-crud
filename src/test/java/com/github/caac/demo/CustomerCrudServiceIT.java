@@ -1,6 +1,10 @@
 package com.github.caac.demo;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +29,7 @@ class CustomerCrudServiceIT {
         customer.setAge(30);
         customer.setEmail("john.doe@example.com");
 
-        Customer result = customerCrudService.createPerson(customer);
+        Customer result = customerCrudService.createCustomer(customer);
 
         assertNotNull(result);
         assertEquals("john.doe@example.com", result.getEmail());
@@ -41,7 +45,7 @@ class CustomerCrudServiceIT {
         customer.setEmail("invalid-email");
 
         Exception exception = assertThrows(ConstraintViolationException.class, () -> {
-            customerCrudService.createPerson(customer);
+            customerCrudService.createCustomer(customer);
         });
 
         System.out.println(exception.getMessage());

@@ -18,13 +18,13 @@ public class CustomerCrudService {
     
     @Transactional(readOnly = true)
     public Customer getCustomer(Long id) {
-        Optional<Customer> person = customerRepository.findById(id);
-        return person.orElse(null);
+        Optional<Customer> customer = customerRepository.findById(id);
+        return customer.orElse(null);
     }
 
     @Transactional
     @Validated
-    public Customer createPerson(Customer customer) {
+    public Customer createCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
 
@@ -32,7 +32,7 @@ public class CustomerCrudService {
     @Validated
     public Customer createCustomerWithAddress(Customer customer, List<Address> addresses) {
         customer.setAddresses(addresses);
-        addresses.forEach(address -> address.setPerson(customer));
+        addresses.forEach(address -> address.setCustomer(customer));
 
         return customerRepository.save(customer);
     }

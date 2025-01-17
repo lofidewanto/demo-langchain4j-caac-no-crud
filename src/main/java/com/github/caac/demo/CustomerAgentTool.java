@@ -31,7 +31,7 @@ public class CustomerAgentTool {
             """)
     public Customer createCustomerWithAddress(Customer customer, List<Address> addresses) {
         customer.setAddresses(addresses);
-        addresses.forEach(address -> address.setPerson(customer));
+        addresses.forEach(address -> address.setCustomer(customer));
 
         return customerRepository.save(customer);
     }
