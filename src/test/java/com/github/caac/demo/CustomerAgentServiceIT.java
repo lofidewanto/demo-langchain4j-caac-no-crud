@@ -1,6 +1,7 @@
 package com.github.caac.demo;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -22,11 +23,11 @@ public class CustomerAgentServiceIT {
         String userMessage = "Hello, how can I help you?";
 
         logger.info("Request: {}", userMessage);
-        
+
         String response = customerAgentService.chat(chatId, userMessage);
 
         logger.info("Response: {}", response);
-        
+
         assertNotNull(response);
     }
 
@@ -36,11 +37,11 @@ public class CustomerAgentServiceIT {
         String userMessage = null;
 
         logger.info("Request: {}", userMessage);
-        
-        String response = customerAgentService.chat(chatId, userMessage);
 
-        logger.info("Response: {}", response);
-        
-        assertNotNull(response);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            customerAgentService.chat(chatId, userMessage);
+        });
+
+        logger.info(exception.getMessage());
     }
 }
