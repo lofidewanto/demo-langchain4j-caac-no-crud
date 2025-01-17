@@ -17,6 +17,9 @@ public class CustomerAgentServiceIT {
     @Autowired
     private CustomerAgentService customerAgentService;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
     @Test
     public void simple_chat() {
         String chatId = "test-chat-id";
@@ -29,6 +32,30 @@ public class CustomerAgentServiceIT {
         logger.info("Response: {}", response);
 
         assertNotNull(response);
+    }
+
+    @Test
+    public void create_customer_chat() {
+        String chatId = "test-chat-id";
+        String userMessage = "Create a new customer data - email: hello@gmail.com - name: John Doe";
+
+        logger.info("Request: {}", userMessage);
+
+        String response = customerAgentService.chat(chatId, userMessage);
+
+        assertNotNull(response);
+        logger.info("Response: {}", response);
+
+        userMessage = "Yes, I confirmed to add this record.";
+        logger.info("Request: {}", userMessage);
+        response = customerAgentService.chat(chatId, userMessage);
+
+        assertNotNull(response);
+        logger.info("Response: {}", response);
+
+        // Check the database
+        Customer customer = customerRepository.findByEmail("hello@gmail.com");
+        logger.info("Customer data: {}", customer);
     }
 
     @Test

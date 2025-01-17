@@ -32,7 +32,7 @@ public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
         String chatId = "interactive-chat-id";
         
         // Turn on this line to use the chat in the console.
-        args = new String[] { "chat-id" };
+        // args = new String[] { "chat-id" };
 
         if (args.length <= 0) {
             System.out.println("Usage: java -jar demo-langchain4j-caac-no-crud-0.0.1-SNAPSHOT.jar <chat-id>");
@@ -44,7 +44,6 @@ public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
 
         System.out.println();
         System.out.print("Chat Customer Support for DieSoon Company.\n");
-        System.out.println();
         
         while (true) {
             System.out.println();
