@@ -5,4 +5,5 @@ Demo Comparison of CaaC (Chat as Code) Business Logics vs. CRUD (Create Read Upd
 H2 Console: http://localhost:8080/caac/h2-console/
 
 # Chat and conversation with the CaaC (Chat as Code) Business Logics
-Create a new customer - email: hello@gmail.com - name: Hello Java CaaC
+- Print all data of following customer: john@gmail.com
+- Create a new customer - email: hello@gmail.com - name: Hello Java CaaC

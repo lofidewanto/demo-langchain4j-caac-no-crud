@@ -59,6 +59,33 @@ public class CustomerAgentServiceIT {
     }
 
     @Test
+    public void find_customer_chat() {
+        // Find a CRUD Customer Service.
+        Customer customer = new Customer();
+        customer.setName("Brother John");
+        customer.setAge(40);
+
+        String email = "banana@gmail.com";
+        customer.setEmail(email);
+
+        customerRepository.save(customer);
+
+        String chatId = "test-chat-id";
+        String userMessage = "Print all data of following customer: " + email;
+
+        logger.info("Request: {}", userMessage);
+
+        String response = customerAgentService.chat(chatId, userMessage);
+
+        assertNotNull(response);
+        logger.info("Response: {}", response);
+
+        // Check the database
+        Customer customerChecked = customerRepository.findByEmail(email);
+        logger.info("Customer data: {}", customerChecked.getName());
+    }
+
+    @Test
     public void null_chat() {
         String chatId = "test-chat-id";
         String userMessage = null;
