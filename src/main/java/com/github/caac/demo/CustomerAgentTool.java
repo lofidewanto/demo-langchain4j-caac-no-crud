@@ -25,7 +25,7 @@ public class CustomerAgentTool {
     @Tool("""
             Retrieves a customer by the customer id.
             """)
-    public Optional<Customer> getCustomer(Long customerId) {
+    public Optional<Customer> getCustomerById(Long customerId) {
         logger.info("getCustomerById: " + customerId);
         return customerRepository.findById(customerId);
     }
@@ -34,7 +34,7 @@ public class CustomerAgentTool {
     @Tool("""
             Retrieves a customer by the email.
             """)
-    public Customer getCustomer(String email) {
+    public Customer getCustomerByEmail(String email) {
         logger.info("getCustomerByEmail: " + email);
         return customerRepository.findByEmail(email);
     }

@@ -65,8 +65,7 @@ public class CustomerAgentServiceIT {
     }
 
     @Test
-    @Transactional
-    public void find_customer_chat() {
+    public void find_customer_by_id() {
         // Find a CRUD Customer Service.
         Customer customer = new Customer();
         customer.setName("Brother John");
@@ -79,6 +78,38 @@ public class CustomerAgentServiceIT {
 
         String chatId = "test-chat-id";
         String userMessage = "Print all data (name, email and age) of following customer id: " + 1;
+
+        logger.info("Request: {}", userMessage);
+
+        Result<String> response = customerAgentService.chat(chatId, userMessage);
+
+        String answer = response.content();
+        List<ToolExecution> toolExecutions = response.toolExecutions();
+
+        assertNotNull(response);
+        logger.info("Tool Executions: {}", toolExecutions);
+        logger.info("Response: {}", answer);
+        logger.info("Response: {}", response);
+
+        // Check the database
+        Customer customerChecked = customerRepository.findByEmail(email);
+        logger.info("Customer data: {}", customerChecked.getName());
+    }
+
+    @Test
+    public void find_customer_by_email() {
+        // Find a CRUD Customer Service.
+        Customer customer = new Customer();
+        customer.setName("Brother John");
+        customer.setAge(40);
+
+        String email = "banana@gmail.com";
+        customer.setEmail(email);
+
+        customerRepository.save(customer);
+
+        String chatId = "test-chat-id";
+        String userMessage = "Print all data (name, email and age) of following customer email: " + email;
 
         logger.info("Request: {}", userMessage);
 
