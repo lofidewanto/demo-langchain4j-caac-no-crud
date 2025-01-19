@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import dev.langchain4j.agent.tool.Tool;
 
+@Component
 public class CustomerAgentTool {
 
     private static Logger logger = LoggerFactory.getLogger(CustomerAgentTool.class);

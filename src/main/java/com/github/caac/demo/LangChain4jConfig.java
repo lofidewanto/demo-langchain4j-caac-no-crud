@@ -17,13 +17,6 @@ import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 public class LangChain4jConfig {
 
     @Bean
-    CustomerAgentTool customerAgentTool(CustomerRepository customerRepository) {
-        // @Component won't work, because it is too late to instrument the class.
-        // Therefore we add the Component with @Bean
-        return new CustomerAgentTool(customerRepository);
-    }
-
-    @Bean
     ChatMemoryProvider chatMemoryProvider() {
         return chatId -> MessageWindowChatMemory.withMaxMessages(1000);
     }
