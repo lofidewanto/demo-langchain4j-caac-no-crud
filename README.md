@@ -12,4 +12,3 @@ mvn spring-boot:run -Dspring-boot.run.arguments=chat-id
 # Chat and conversation with the CaaC (Chat as Code) Business Logics
 - Print all data of following customer: john@gmail.com
 - Create a new customer - email: hello@gmail.com - name: Hello Java CaaC
-
