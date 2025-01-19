@@ -1,6 +1,7 @@
 package com.github.caac.demo;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +23,19 @@ public class CustomerAgentTool {
 
     @Transactional(readOnly = true)
     @Tool("""
+            Retrieves a customer by the customer id.
+            """)
+    public Optional<Customer> getCustomer(Long customerId) {
+        logger.info("getCustomerById: " + customerId);
+        return customerRepository.findById(customerId);
+    }
+
+    @Transactional(readOnly = true)
+    @Tool("""
             Retrieves a customer by the email.
             """)
     public Customer getCustomer(String email) {
-        logger.info("getCustomer");
+        logger.info("getCustomerByEmail: " + email);
         return customerRepository.findByEmail(email);
     }
 

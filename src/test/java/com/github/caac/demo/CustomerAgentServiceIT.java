@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import dev.langchain4j.service.Result;
 import dev.langchain4j.service.tool.ToolExecution;
@@ -64,6 +65,7 @@ public class CustomerAgentServiceIT {
     }
 
     @Test
+    @Transactional
     public void find_customer_chat() {
         // Find a CRUD Customer Service.
         Customer customer = new Customer();
@@ -76,7 +78,7 @@ public class CustomerAgentServiceIT {
         customerRepository.save(customer);
 
         String chatId = "test-chat-id";
-        String userMessage = "Print all data of following customer: " + email;
+        String userMessage = "Print all data (name, email and age) of following customer id: " + 1;
 
         logger.info("Request: {}", userMessage);
 
@@ -85,10 +87,9 @@ public class CustomerAgentServiceIT {
         String answer = response.content();
         List<ToolExecution> toolExecutions = response.toolExecutions();
 
+        assertNotNull(response);
         logger.info("Tool Executions: {}", toolExecutions);
         logger.info("Response: {}", answer);
-
-        assertNotNull(response);
         logger.info("Response: {}", response);
 
         // Check the database
