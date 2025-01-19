@@ -1,30 +1,55 @@
 package com.github.caac.demo;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.List;
-
+import dev.langchain4j.service.Result;
+import dev.langchain4j.service.tool.ToolExecution;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
-import dev.langchain4j.service.Result;
-import dev.langchain4j.service.tool.ToolExecution;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class CustomerAgentServiceIT {
 
-    private static Logger logger = LoggerFactory.getLogger(CustomerAgentServiceIT.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomerAgentServiceIT.class);
 
     @Autowired
     private CustomerAgentService customerAgentService;
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    private final String email = "banana@gmail.com";
+
+    @BeforeEach
+    public void setUp() {
+        createTestCustomer();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        deleteTestCustomer();
+    }
+
+    private void createTestCustomer() {
+        Customer customer = new Customer();
+        customer.setName("Brother John");
+        customer.setAge(40);
+        customer.setEmail(email);
+
+        customerRepository.save(customer);
+    }
+
+    private void deleteTestCustomer() {
+        customerRepository.deleteAllInBatch();
+    }
 
     @Test
     public void simple_chat() {
@@ -66,16 +91,6 @@ public class CustomerAgentServiceIT {
 
     @Test
     public void find_customer_by_id() {
-        // Find a CRUD Customer Service.
-        Customer customer = new Customer();
-        customer.setName("Brother John");
-        customer.setAge(40);
-
-        String email = "banana@gmail.com";
-        customer.setEmail(email);
-
-        customerRepository.save(customer);
-
         String chatId = "test-chat-id";
         String userMessage = "Print all data (name, email and age) of following customer id: " + 1;
 
@@ -98,16 +113,6 @@ public class CustomerAgentServiceIT {
 
     @Test
     public void find_customer_by_email() {
-        // Find a CRUD Customer Service.
-        Customer customer = new Customer();
-        customer.setName("Brother John");
-        customer.setAge(40);
-
-        String email = "banana@gmail.com";
-        customer.setEmail(email);
-
-        customerRepository.save(customer);
-
         String chatId = "test-chat-id";
         String userMessage = "Print all data (name, email and age) of following customer email: " + email;
 
