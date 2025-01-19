@@ -7,6 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import dev.langchain4j.service.Result;
+
 @SpringBootApplication
 public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
 
@@ -32,7 +34,7 @@ public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
         String chatId = "interactive-chat-id";
         
         // Turn on this line to use the chat in the console.
-        // args = new String[] { "chat-id" };
+        args = new String[] { "chat-id" };
 
         if (args.length <= 0) {
             System.out.println("Usage: java -jar demo-langchain4j-caac-no-crud-0.0.1-SNAPSHOT.jar <chat-id>");
@@ -55,8 +57,8 @@ public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
                 break;
             }
             
-            String response = customerAgentService.chat(chatId, userMessage);
-            System.out.println("Agent: " + response);
+            Result<String> response = customerAgentService.chat(chatId, userMessage);
+            System.out.println("Agent: " + response.content());
             System.out.println();
         }
         

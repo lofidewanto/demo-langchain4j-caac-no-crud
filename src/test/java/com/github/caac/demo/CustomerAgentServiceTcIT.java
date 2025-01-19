@@ -20,6 +20,8 @@ import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.ollama.OllamaContainer;
 import org.testcontainers.utility.MountableFile;
 
+import dev.langchain4j.service.Result;
+
 @Disabled("This test is ignored because it will use Testcontainers.")
 @SpringBootTest
 class CustomerAgentServiceTcIT {
@@ -117,7 +119,7 @@ class CustomerAgentServiceTcIT {
         String chatId = "test-chat-id";
         String userMessage = "I would like to change my booking.";
 
-        String response = customerAgentService.chat(chatId, userMessage);
+        Result<String> response = customerAgentService.chat(chatId, userMessage);
 
         assertNotNull(response);
         System.out.println("Simple Chat: " + response);

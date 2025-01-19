@@ -3,11 +3,16 @@ package com.github.caac.demo;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import dev.langchain4j.service.Result;
+import dev.langchain4j.service.tool.ToolExecution;
 
 @SpringBootTest
 public class CustomerAgentServiceIT {
@@ -27,7 +32,7 @@ public class CustomerAgentServiceIT {
 
         logger.info("Request: {}", userMessage);
 
-        String response = customerAgentService.chat(chatId, userMessage);
+        Result<String> response = customerAgentService.chat(chatId, userMessage);
 
         logger.info("Response: {}", response);
 
@@ -41,7 +46,7 @@ public class CustomerAgentServiceIT {
 
         logger.info("Request: {}", userMessage);
 
-        String response = customerAgentService.chat(chatId, userMessage);
+        Result<String> response = customerAgentService.chat(chatId, userMessage);
 
         assertNotNull(response);
         logger.info("Response: {}", response);
@@ -75,7 +80,13 @@ public class CustomerAgentServiceIT {
 
         logger.info("Request: {}", userMessage);
 
-        String response = customerAgentService.chat(chatId, userMessage);
+        Result<String> response = customerAgentService.chat(chatId, userMessage);
+
+        String answer = response.content();
+        List<ToolExecution> toolExecutions = response.toolExecutions();
+
+        logger.info("Tool Executions: {}", toolExecutions);
+        logger.info("Response: {}", answer);
 
         assertNotNull(response);
         logger.info("Response: {}", response);
