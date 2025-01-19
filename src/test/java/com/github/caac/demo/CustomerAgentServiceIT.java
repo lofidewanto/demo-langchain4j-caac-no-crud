@@ -60,7 +60,7 @@ public class CustomerAgentServiceIT {
 
         Result<String> response = customerAgentService.chat(chatId, userMessage);
 
-        logger.info("Response: {}", response);
+        logger.info("Response: {}", response.content());
 
         assertNotNull(response);
     }
@@ -75,14 +75,14 @@ public class CustomerAgentServiceIT {
         Result<String> response = customerAgentService.chat(chatId, userMessage);
 
         assertNotNull(response);
-        logger.info("Response: {}", response);
+        logger.info("Response: {}", response.content());
 
         userMessage = "Yes, I confirmed to add this record.";
         logger.info("Request: {}", userMessage);
         response = customerAgentService.chat(chatId, userMessage);
 
         assertNotNull(response);
-        logger.info("Response: {}", response);
+        logger.info("Response: {}", response.content());
 
         // Check the database
         Customer customer = customerRepository.findByEmail("hello@gmail.com");
@@ -104,11 +104,10 @@ public class CustomerAgentServiceIT {
         assertNotNull(response);
         logger.info("Tool Executions: {}", toolExecutions);
         logger.info("Response: {}", answer);
-        logger.info("Response: {}", response);
 
         // Check the database
         Customer customerChecked = customerRepository.findByEmail(email);
-        logger.info("Customer data: {}", customerChecked.getName());
+        logger.info("Customer data with CRUD: {}", customerChecked.getName());
     }
 
     @Test
@@ -126,7 +125,6 @@ public class CustomerAgentServiceIT {
         assertNotNull(response);
         logger.info("Tool Executions: {}", toolExecutions);
         logger.info("Response: {}", answer);
-        logger.info("Response: {}", response);
 
         // Check the database
         Customer customerChecked = customerRepository.findByEmail(email);
