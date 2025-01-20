@@ -24,6 +24,16 @@ public class CustomerAgentTool {
     @Validated
     @Transactional(readOnly = true)
     @Tool("""
+            Retrieves all customers.
+            """)
+    public List<Customer> getAllCustomers() {
+        logger.info("getAllCustomers with no parameter");
+        return customerRepository.findAll();
+    }
+
+    @Validated
+    @Transactional(readOnly = true)
+    @Tool("""
             Retrieves a customer by the customer id.
             """)
     public Customer getCustomerById(@NotNull Long customerId) {

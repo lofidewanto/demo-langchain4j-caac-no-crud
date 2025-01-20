@@ -10,12 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class CustomerAgentServiceIT {
@@ -30,21 +30,18 @@ public class CustomerAgentServiceIT {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @BeforeEach
-    public void setUp() {
-        createTestCustomer();
-    }
-
-    @AfterEach
-    public void tearDown() {
-        deleteTestCustomer();
-    }
-
     private void createTestCustomer() {
         Customer customer = new Customer();
         customer.setName("Brother John");
         customer.setAge(40);
         customer.setEmail(email);
+
+        Address address = new Address();
+        address.setStreet("1234 Main Street");
+        address.setCity("New York");
+        address.setState("NY");
+        address.setZipCode("10001");
+        address.setCustomer(customer);
 
         customerRepository.save(customer);
     }
@@ -69,7 +66,10 @@ public class CustomerAgentServiceIT {
 
     @Disabled("We need to have the Tool connected to addresses")
     @Test
+    @Transactional
     public void create_customer_chat() {
+        createTestCustomer();
+
         String chatId = "test-chat-id" + System.currentTimeMillis();
 
         String userMessage = """
@@ -98,10 +98,15 @@ public class CustomerAgentServiceIT {
         Optional<Customer> customer = customerRepository.findByEmail("hello@gmail.com");
         assertNotNull(customer.get());
         logger.info("Customer data: {}", customer.get());
+
+        deleteTestCustomer();
     }
 
     @Test
+    @Transactional
     public void find_customer_by_id() {
+        createTestCustomer();
+
         String chatId = "test-chat-id" + System.currentTimeMillis();
         Long customerId = 1L;
         String userMessage = "Print all data (name, email and age). My customer ID is: " + customerId;
@@ -120,10 +125,15 @@ public class CustomerAgentServiceIT {
         // Check the database
         Optional<Customer> customerChecked = customerRepository.findByEmail(email);
         logger.info("Customer data with CRUD - Customer ID: {}", customerChecked.get().getId());
+
+        deleteTestCustomer();
     }
 
     @Test
+    @Transactional
     public void find_customer_by_email() {
+        createTestCustomer();
+
         String chatId = "test-chat-id" + System.currentTimeMillis();
         String userMessage = "Print all data (name, email and age) of following customer email: " + email;
 
@@ -141,6 +151,8 @@ public class CustomerAgentServiceIT {
         // Check the database
         Optional<Customer> customerChecked = customerRepository.findByEmail(email);
         logger.info("Customer data: {}", customerChecked.get().getName());
+
+        deleteTestCustomer();
     }
 
     @Test
@@ -155,5 +167,31 @@ public class CustomerAgentServiceIT {
         });
 
         logger.info(exception.getMessage());
+    }
+
+    @Test
+    @Transactional
+    public void find_all_customers() {
+        createTestCustomer();
+
+        String chatId = "test-chat-id" + System.currentTimeMillis();
+        String userMessage = "Print all customers from your data";
+
+        logger.info("Request: {}", userMessage);
+
+        Result<String> response = customerAgentService.chat(chatId, userMessage);
+
+        String answer = response.content();
+        List<ToolExecution> toolExecutions = response.toolExecutions();
+
+        assertNotNull(response);
+        logger.info("Tool Executions: {}", toolExecutions);
+        logger.info("Response: {}", answer);
+
+        // Check the database
+        long count = customerRepository.count();
+        assertEquals(count, 1);
+
+        deleteTestCustomer();
     }
 }
