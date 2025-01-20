@@ -41,11 +41,12 @@ public class CustomerAgentTool {
         return customerRepository.findByEmail(email).get();
     }
 
+    @Validated
     @Transactional
     @Tool("""
             Creates a new customer with one or more addresses.
             """)
-    public Customer createCustomerWithAddress(Customer customer, List<Address> addresses) {
+    public Customer createCustomerWithAddress(@NotNull Customer customer, @NotNull List<Address> addresses) {
         logger.info("createCustomerWithAddress");
         customer.setAddresses(addresses);
         addresses.forEach(address -> address.setCustomer(customer));
@@ -53,11 +54,12 @@ public class CustomerAgentTool {
         return customerRepository.save(customer);
     }
 
+    @Validated
     @Transactional
     @Tool("""
             Creates a new customer.
             """)
-    public Customer createCustomer(Customer customer) {
+    public Customer createCustomer(@NotNull Customer customer) {
         logger.info("createCustomer");
         return customerRepository.save(customer);
     }

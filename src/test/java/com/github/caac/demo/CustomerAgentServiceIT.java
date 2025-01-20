@@ -20,11 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class CustomerAgentServiceIT {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerAgentServiceIT.class);
-    private final String email = "banana@gmail.com";
+
     @Autowired
     private CustomerAgentService customerAgentService;
+
     @Autowired
     private CustomerRepository customerRepository;
+
+    private final String email = "banana@gmail.com";
 
     @BeforeEach
     public void setUp() {
@@ -52,7 +55,7 @@ public class CustomerAgentServiceIT {
     @Test
     public void simple_chat() {
         String chatId = "test-chat-id";
-        String userMessage = "Hello, how can I help you?";
+        String userMessage = "Hello, how are you?";
 
         logger.info("Request: {}", userMessage);
 
@@ -84,14 +87,14 @@ public class CustomerAgentServiceIT {
 
         // Check the database
         Optional<Customer> customer = customerRepository.findByEmail("hello@gmail.com");
-        logger.info("Customer data: {}", customer);
+        assertNotNull(customer.get());
+        logger.info("Customer data: {}", customer.get());
     }
 
     @Test
     public void find_customer_by_id() {
         String chatId = "test-chat-id";
-        Long customerId = 1L;
-        String userMessage = "Print all data (name, email and age) of my customer data. My customer ID is: " + customerId;
+        String userMessage = "Print all data (name, email and age) of following customer id: " + 1;
 
         logger.info("Request: {}", userMessage);
 
@@ -106,7 +109,7 @@ public class CustomerAgentServiceIT {
 
         // Check the database
         Optional<Customer> customerChecked = customerRepository.findByEmail(email);
-        logger.info("Customer data with CRUD: {}", "Name: " + customerChecked.get().getName() + " - ID: " + customerChecked.get().getId());
+        logger.info("Customer data with CRUD: {}", customerChecked.get().getName());
     }
 
     @Test
