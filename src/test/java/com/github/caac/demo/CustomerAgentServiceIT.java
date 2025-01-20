@@ -103,7 +103,8 @@ public class CustomerAgentServiceIT {
     @Test
     public void find_customer_by_id() {
         String chatId = "test-chat-id" + System.currentTimeMillis();
-        String userMessage = "Print all data (name, email and age) of following customer id: " + 1;
+        Long customerId = 1L;
+        String userMessage = "Print all data (name, email and age). My customer ID is: " + customerId;
 
         logger.info("Request: {}", userMessage);
 
@@ -118,7 +119,7 @@ public class CustomerAgentServiceIT {
 
         // Check the database
         Optional<Customer> customerChecked = customerRepository.findByEmail(email);
-        logger.info("Customer data with CRUD: {}", customerChecked.get().getName());
+        logger.info("Customer data with CRUD - Customer ID: {}", customerChecked.get().getId());
     }
 
     @Test
