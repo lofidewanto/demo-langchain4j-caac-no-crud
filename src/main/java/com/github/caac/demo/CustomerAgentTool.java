@@ -37,18 +37,18 @@ public class CustomerAgentTool {
     @Tool("""
             Retrieves a customer by the customer id.
             """)
-    public Customer getCustomerById(@NotNull(message = "Customer ID cannot be null.") Long customerId) {
+    public String getCustomerById(@NotNull(message = "Customer ID cannot be null.") Long customerId) {
         logger.info("getCustomerById parameter: " + customerId);
-        return customerRepository.findById(customerId).get();
+        return customerRepository.findById(customerId).get().getName();
     }
 
     @Transactional(readOnly = true)
     @Tool("""
             Retrieves a customer by the email.
             """)
-    public Customer getCustomerByEmail(@NotNull(message = "Customer email cannot be null.")  String email) {
+    public String getCustomerByEmail(@NotNull(message = "Customer email cannot be null.")  String email) {
         logger.info("getCustomerByEmail parameter: " + email);
-        return customerRepository.findByEmail(email).get();
+        return customerRepository.findByEmail(email).get().getName();
     }
 
     @Transactional
