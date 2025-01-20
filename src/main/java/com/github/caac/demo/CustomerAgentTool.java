@@ -1,19 +1,20 @@
 package com.github.caac.demo;
 
-import java.util.List;
-import java.util.Optional;
-
+import dev.langchain4j.agent.tool.Tool;
+import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
-import dev.langchain4j.agent.tool.Tool;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CustomerAgentTool {
 
-    private static Logger logger = LoggerFactory.getLogger(CustomerAgentTool.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomerAgentTool.class);
 
     private final CustomerRepository customerRepository;
 
@@ -21,21 +22,23 @@ public class CustomerAgentTool {
         this.customerRepository = service;
     }
 
+    @Validated
     @Transactional(readOnly = true)
     @Tool("""
             Retrieves a customer by the customer id.
             """)
-    public Optional<Customer> getCustomerById(Long customerId) {
-        logger.info("getCustomerById: " + customerId);
+    public Optional<Customer> getCustomerById(@NotNull Long customerId) {
+        logger.info("getCustomerById parameter: " + customerId);
         return customerRepository.findById(customerId);
     }
 
+    @Validated
     @Transactional(readOnly = true)
     @Tool("""
             Retrieves a customer by the email.
             """)
-    public Customer getCustomerByEmail(String email) {
-        logger.info("getCustomerByEmail: " + email);
+    public Customer getCustomerByEmail(@NotNull String email) {
+        logger.info("getCustomerByEmail parameter: " + email);
         return customerRepository.findByEmail(email);
     }
 
