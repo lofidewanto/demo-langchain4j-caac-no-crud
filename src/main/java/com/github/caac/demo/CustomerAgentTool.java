@@ -27,11 +27,19 @@ public class CustomerAgentTool {
     @Tool("""
             Retrieves all customers  and returns a list of customers.
             """)
-    public String getAllCustomers() {
+    public List<CustomerDto> getAllCustomers() {
         logger.info("getAllCustomers with no parameter");
+
         List<Customer> all = customerRepository.findAll();
-        String allString = all.toString();
-        return allString;
+
+        List<CustomerDto> customerDtos = all.stream().map(customer -> {
+            var addressDtoList = customer.getAddresses().stream().map(a ->
+                    new AddressDto(a.getId(), a.getStreet(), a.getCity(), a.getState(), a.getZipCode())).toList();
+            return new CustomerDto(customer.getId(), customer.getName(), customer.getAge(),
+                    customer.getEmail(), addressDtoList);
+        }).toList();
+
+        return customerDtos;
     }
 
     @Transactional(readOnly = true)
@@ -40,7 +48,9 @@ public class CustomerAgentTool {
             """)
     public CustomerDto getCustomerById(@NotNull(message = "Customer ID cannot be null.") Long arg0) {
         logger.info("getCustomerById parameter: " + arg0);
+
         var customer = customerRepository.findById(arg0).get();
+
         var addressDtoList = customer.getAddresses().stream().map(a ->
                 new AddressDto(a.getId(), a.getStreet(), a.getCity(), a.getState(), a.getZipCode())).toList();
         return new CustomerDto(customer.getId(), customer.getName(), customer.getAge(),
@@ -53,7 +63,9 @@ public class CustomerAgentTool {
             """)
     public CustomerDto getCustomerByEmail(@NotNull(message = "Customer email cannot be null.")  String arg0) {
         logger.info("getCustomerByEmail parameter: " + arg0);
+
         var customer = customerRepository.findByEmail(arg0).get();
+
         var addressDtoList = customer.getAddresses().stream().map(a ->
                 new AddressDto(a.getId(), a.getStreet(), a.getCity(), a.getState(), a.getZipCode())).toList();
         return new CustomerDto(customer.getId(), customer.getName(), customer.getAge(),
@@ -65,22 +77,30 @@ public class CustomerAgentTool {
             Creates a new customer with a list of addresses and returns the 
             created customer.
             """)
-    public Customer createCustomerWithAddress(@NotNull @P("The customer object") Customer arg0,
+    public CustomerDto createCustomerWithAddress(@NotNull @P("The customer object") Customer arg0,
                                               @NotNull @P("A list of address objects") List<Address> arg1) {
         logger.info("createCustomerWithAddress");
         arg0.setAddresses(arg1);
         arg1.forEach(address -> address.setCustomer(arg0));
 
-        return customerRepository.save(arg0);
+        Customer savedCustomer = customerRepository.save(arg0);
+
+        var addressDtoList = savedCustomer.getAddresses().stream().map(a ->
+                new AddressDto(a.getId(), a.getStreet(), a.getCity(), a.getState(), a.getZipCode())).toList();
+        return new CustomerDto(savedCustomer.getId(), savedCustomer.getName(), savedCustomer.getAge(),
+                savedCustomer.getEmail(), addressDtoList);
     }
 
     @Transactional
     @Tool("""
             Creates a new customer without addresses and returns the created customer.
             """)
-    public Customer createCustomer(@NotNull @P("The customer object")  Customer arg0) {
+    public CustomerDto createCustomer(@NotNull @P("The customer object")  Customer arg0) {
         logger.info("createCustomer parameter: " + arg0);
-        return customerRepository.save(arg0);
+        Customer savedCustomer = customerRepository.save(arg0);
+
+        return new CustomerDto(savedCustomer.getId(), savedCustomer.getName(), savedCustomer.getAge(),
+                savedCustomer.getEmail(), null);
     }
 
 }
