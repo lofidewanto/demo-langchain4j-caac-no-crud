@@ -31,7 +31,7 @@ public class CustomerAgentServiceIT {
     @Autowired
     private AddressRepository addressRepository;
 
-    private void createTestCustomer() {
+    private Customer createTestCustomer() {
         Customer customer = new Customer();
         customer.setName("Brother John");
         customer.setAge(40);
@@ -45,7 +45,7 @@ public class CustomerAgentServiceIT {
         address.setCustomer(customer);
 
         customer.addAddress(address);
-        customerRepository.save(customer);
+        return customerRepository.save(customer);
     }
 
     private void deleteTestCustomer() {
@@ -104,10 +104,10 @@ public class CustomerAgentServiceIT {
     @Test
     @Transactional
     public void find_customer_by_id() {
-        createTestCustomer();
+        Customer customer = createTestCustomer();
+        Long customerId = customer.getId();
 
         String chatId = "test-chat-id" + System.currentTimeMillis();
-        Long customerId = 1L;
         String userMessage = "Print all data (name, email and age). My customer ID is: " + customerId;
 
         logger.info("Request: {}", userMessage);

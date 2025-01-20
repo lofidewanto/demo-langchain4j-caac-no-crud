@@ -38,18 +38,26 @@ public class CustomerAgentTool {
     @Tool("""
             Retrieves a customer by the customer id.
             """)
-    public String getCustomerById(@NotNull(message = "Customer ID cannot be null.") Long customerId) {
-        logger.info("getCustomerById parameter: " + customerId);
-        return customerRepository.findById(customerId).get().getName();
+    public CustomerDto getCustomerById(@NotNull(message = "Customer ID cannot be null.") Long arg0) {
+        logger.info("getCustomerById parameter: " + arg0);
+        var customer = customerRepository.findById(arg0).get();
+        var addressDtoList = customer.getAddresses().stream().map(a ->
+                new AddressDto(a.getId(), a.getStreet(), a.getCity(), a.getState(), a.getZipCode())).toList();
+        return new CustomerDto(customer.getId(), customer.getName(), customer.getAge(),
+                customer.getEmail(), addressDtoList);
     }
 
     @Transactional(readOnly = true)
     @Tool("""
             Retrieves a customer by the email.
             """)
-    public String getCustomerByEmail(@NotNull(message = "Customer email cannot be null.")  String email) {
-        logger.info("getCustomerByEmail parameter: " + email);
-        return customerRepository.findByEmail(email).get().getName();
+    public CustomerDto getCustomerByEmail(@NotNull(message = "Customer email cannot be null.")  String arg0) {
+        logger.info("getCustomerByEmail parameter: " + arg0);
+        var customer = customerRepository.findByEmail(arg0).get();
+        var addressDtoList = customer.getAddresses().stream().map(a ->
+                new AddressDto(a.getId(), a.getStreet(), a.getCity(), a.getState(), a.getZipCode())).toList();
+        return new CustomerDto(customer.getId(), customer.getName(), customer.getAge(),
+                customer.getEmail(), addressDtoList);
     }
 
     @Transactional
@@ -57,22 +65,22 @@ public class CustomerAgentTool {
             Creates a new customer with a list of addresses and returns the 
             created customer.
             """)
-    public Customer createCustomerWithAddress(@NotNull @P("The customer object") Customer customer,
-                                              @NotNull @P("A list of address objects") List<Address> addresses) {
+    public Customer createCustomerWithAddress(@NotNull @P("The customer object") Customer arg0,
+                                              @NotNull @P("A list of address objects") List<Address> arg1) {
         logger.info("createCustomerWithAddress");
-        customer.setAddresses(addresses);
-        addresses.forEach(address -> address.setCustomer(customer));
+        arg0.setAddresses(arg1);
+        arg1.forEach(address -> address.setCustomer(arg0));
 
-        return customerRepository.save(customer);
+        return customerRepository.save(arg0);
     }
 
     @Transactional
     @Tool("""
             Creates a new customer without addresses and returns the created customer.
             """)
-    public Customer createCustomer(@NotNull @P("The customer object")  Customer customer) {
-        logger.info("createCustomer parameter: " + customer);
-        return customerRepository.save(customer);
+    public Customer createCustomer(@NotNull @P("The customer object")  Customer arg0) {
+        logger.info("createCustomer parameter: " + arg0);
+        return customerRepository.save(arg0);
     }
 
 }
