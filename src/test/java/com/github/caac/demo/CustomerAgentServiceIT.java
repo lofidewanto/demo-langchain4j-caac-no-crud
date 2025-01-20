@@ -106,7 +106,7 @@ public class CustomerAgentServiceIT {
 
         // Check the database
         Optional<Customer> customerChecked = customerRepository.findByEmail(email);
-        logger.info("Customer data with CRUD: {}", customerChecked.get().getName());
+        logger.info("Customer data with CRUD: {}", "Name: " + customerChecked.get().getName() + " - ID: " + customerChecked.get().getId());
     }
 
     @Test
