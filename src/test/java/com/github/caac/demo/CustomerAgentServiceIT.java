@@ -175,7 +175,7 @@ public class CustomerAgentServiceIT {
         createTestCustomer();
 
         String chatId = "test-chat-id" + System.currentTimeMillis();
-        String userMessage = "Print all customers from your data";
+        String userMessage = "Print all customers from your data.";
 
         logger.info("Request: {}", userMessage);
 
