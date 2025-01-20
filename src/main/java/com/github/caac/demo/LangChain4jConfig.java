@@ -18,7 +18,7 @@ public class LangChain4jConfig {
 
     @Bean
     ChatMemoryProvider chatMemoryProvider() {
-        return chatId -> MessageWindowChatMemory.withMaxMessages(1000);
+        return chatId -> MessageWindowChatMemory.withMaxMessages(10);
     }
 
     @Bean

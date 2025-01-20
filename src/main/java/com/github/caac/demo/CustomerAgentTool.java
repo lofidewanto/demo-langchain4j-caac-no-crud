@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 @Component
+@Validated
 public class CustomerAgentTool {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerAgentTool.class);
@@ -21,7 +22,6 @@ public class CustomerAgentTool {
         this.customerRepository = service;
     }
 
-    @Validated
     @Transactional(readOnly = true)
     @Tool("""
             Retrieves all customers  and returns a list of customers.
@@ -33,27 +33,24 @@ public class CustomerAgentTool {
         return allString;
     }
 
-    @Validated
     @Transactional(readOnly = true)
     @Tool("""
             Retrieves a customer by the customer id.
             """)
-    public Customer getCustomerById(@NotNull Long customerId) {
+    public Customer getCustomerById(@NotNull(message = "Customer ID cannot be null.") Long customerId) {
         logger.info("getCustomerById parameter: " + customerId);
         return customerRepository.findById(customerId).get();
     }
 
-    @Validated
     @Transactional(readOnly = true)
     @Tool("""
             Retrieves a customer by the email.
             """)
-    public Customer getCustomerByEmail(@NotNull String email) {
+    public Customer getCustomerByEmail(@NotNull(message = "Customer email cannot be null.")  String email) {
         logger.info("getCustomerByEmail parameter: " + email);
         return customerRepository.findByEmail(email).get();
     }
 
-    @Validated
     @Transactional
     @Tool("""
             Creates a new customer with one or more addresses.
@@ -66,7 +63,6 @@ public class CustomerAgentTool {
         return customerRepository.save(customer);
     }
 
-    @Validated
     @Transactional
     @Tool("""
             Creates a new customer.
