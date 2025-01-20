@@ -1,13 +1,12 @@
 package com.github.caac.demo;
 
-import java.util.Scanner;
-
+import dev.langchain4j.service.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import dev.langchain4j.service.Result;
+import java.util.Scanner;
 
 @SpringBootApplication
 public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
@@ -24,20 +23,18 @@ public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Create a CRUD Customer Service.
-        Customer customer = new Customer();
-        customer.setName("Brandy Doe");
-        customer.setAge(40);
-        customer.setEmail("john@gmail.com");
-        customerCrudService.createCustomer(customer);
+        createTestCustomer();
 
         String chatId = "interactive-chat-id";
-        
+
         // Turn on this line to use the chat in the console.
         // args = new String[] { "chat-id" };
 
         if (args.length <= 0) {
             System.out.println("Usage: java -jar demo-langchain4j-caac-no-crud-0.0.1-SNAPSHOT.jar <chat-id>");
+
+            deleteTestCustomer();
+
             return;
         }
 
@@ -46,22 +43,34 @@ public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
 
         System.out.println();
         System.out.print("Chat Customer Support for DieSoon Company.\n");
-        
+
         while (true) {
             System.out.println();
             System.out.print("You: ");
             String userMessage = scanner.nextLine();
             System.out.println();
-            
+
             if ("exit".equalsIgnoreCase(userMessage)) {
                 break;
             }
-            
+
             Result<String> response = customerAgentService.chat(chatId, userMessage);
             System.out.println("Agent: " + response.content());
             System.out.println();
         }
-        
+
         scanner.close();
+    }
+
+    private void createTestCustomer() {
+        Customer customer = new Customer();
+        customer.setName("Brandy Doe");
+        customer.setAge(40);
+        customer.setEmail("john@gmail.com");
+        customerCrudService.createCustomer(customer);
+    }
+
+    private void deleteTestCustomer() {
+        customerCrudService.deleteAllCustomers();
     }
 }

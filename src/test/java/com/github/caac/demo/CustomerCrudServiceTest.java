@@ -1,20 +1,18 @@
 package com.github.caac.demo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
 
 class CustomerCrudServiceTest {
 
@@ -55,7 +53,7 @@ class CustomerCrudServiceTest {
 
         when(customerRepository.findById(personId)).thenReturn(Optional.of(customer));
 
-        Customer result = customerCrudService.getCustomer(personId);
+        Customer result = customerCrudService.getCustomerById(personId);
 
         assertNotNull(result);
         assertEquals(personId, result.getId());

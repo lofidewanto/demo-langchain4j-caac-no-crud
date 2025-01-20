@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,14 +20,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class CustomerAgentServiceIT {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerAgentServiceIT.class);
-
+    private final String email = "banana@gmail.com";
     @Autowired
     private CustomerAgentService customerAgentService;
-
     @Autowired
     private CustomerRepository customerRepository;
-
-    private final String email = "banana@gmail.com";
 
     @BeforeEach
     public void setUp() {
@@ -85,14 +83,15 @@ public class CustomerAgentServiceIT {
         logger.info("Response: {}", response.content());
 
         // Check the database
-        Customer customer = customerRepository.findByEmail("hello@gmail.com");
+        Optional<Customer> customer = customerRepository.findByEmail("hello@gmail.com");
         logger.info("Customer data: {}", customer);
     }
 
     @Test
     public void find_customer_by_id() {
         String chatId = "test-chat-id";
-        String userMessage = "Print all data (name, email and age) of following customer id: " + 1;
+        Long customerId = 1L;
+        String userMessage = "Print all data (name, email and age) of my customer data. My customer ID is: " + customerId;
 
         logger.info("Request: {}", userMessage);
 
@@ -106,8 +105,8 @@ public class CustomerAgentServiceIT {
         logger.info("Response: {}", answer);
 
         // Check the database
-        Customer customerChecked = customerRepository.findByEmail(email);
-        logger.info("Customer data with CRUD: {}", customerChecked.getName());
+        Optional<Customer> customerChecked = customerRepository.findByEmail(email);
+        logger.info("Customer data with CRUD: {}", customerChecked.get().getName());
     }
 
     @Test
@@ -127,8 +126,8 @@ public class CustomerAgentServiceIT {
         logger.info("Response: {}", answer);
 
         // Check the database
-        Customer customerChecked = customerRepository.findByEmail(email);
-        logger.info("Customer data: {}", customerChecked.getName());
+        Optional<Customer> customerChecked = customerRepository.findByEmail(email);
+        logger.info("Customer data: {}", customerChecked.get().getName());
     }
 
     @Test

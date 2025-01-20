@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class CustomerAgentTool {
@@ -27,9 +26,9 @@ public class CustomerAgentTool {
     @Tool("""
             Retrieves a customer by the customer id.
             """)
-    public Optional<Customer> getCustomerById(@NotNull Long customerId) {
+    public Customer getCustomerById(@NotNull Long customerId) {
         logger.info("getCustomerById parameter: " + customerId);
-        return customerRepository.findById(customerId);
+        return customerRepository.findById(customerId).get();
     }
 
     @Validated
@@ -39,7 +38,7 @@ public class CustomerAgentTool {
             """)
     public Customer getCustomerByEmail(@NotNull String email) {
         logger.info("getCustomerByEmail parameter: " + email);
-        return customerRepository.findByEmail(email);
+        return customerRepository.findByEmail(email).get();
     }
 
     @Transactional

@@ -1,24 +1,30 @@
 package com.github.caac.demo;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CustomerCrudService {
-    
+
     private CustomerRepository customerRepository;
 
     public CustomerCrudService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
-    
+
     @Transactional(readOnly = true)
-    public Customer getCustomer(Long id) {
+    public Customer getCustomerById(Long id) {
         Optional<Customer> customer = customerRepository.findById(id);
+        return customer.orElse(null);
+    }
+
+    @Transactional(readOnly = true)
+    public Customer getCustomerByEmail(String email) {
+        Optional<Customer> customer = customerRepository.findByEmail(email);
         return customer.orElse(null);
     }
 
@@ -35,5 +41,10 @@ public class CustomerCrudService {
         addresses.forEach(address -> address.setCustomer(customer));
 
         return customerRepository.save(customer);
+    }
+
+    @Transactional
+    public void deleteAllCustomers() {
+        customerRepository.deleteAllInBatch();
     }
 }

@@ -1,31 +1,40 @@
 package com.github.caac.demo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.validation.ConstraintViolationException;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CustomerCrudServiceIT {
 
+    private final String email = "john.doe@example.com";
     @Autowired
     private CustomerCrudService customerCrudService;
-
     @Autowired
     private CustomerRepository customerRepository;
+
+    private void createTestCustomer() {
+        Customer customer = new Customer();
+        customer.setName("Brother John");
+        customer.setAge(40);
+        customer.setEmail(email);
+
+        customerRepository.save(customer);
+    }
+
+    private void deleteTestCustomer() {
+        customerRepository.deleteAllInBatch();
+    }
 
     @Test
     @Transactional
     void create_customer_with_email() {
         Customer customer = new Customer();
-        customer.setName("John Doe");
+        customer.setName("Barry Doe");
         customer.setAge(30);
         customer.setEmail("john.doe@example.com");
 
@@ -49,5 +58,17 @@ class CustomerCrudServiceIT {
         });
 
         System.out.println(exception.getMessage());
+    }
+
+    @Test
+    @Transactional
+    void get_customer_by_email() {
+        createTestCustomer();
+
+        Customer customerByEmail = customerCrudService.getCustomerByEmail(email);
+
+        assertEquals(email, customerByEmail.getEmail());
+
+        deleteTestCustomer();
     }
 }
