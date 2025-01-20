@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.List;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -67,7 +68,14 @@ public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
         customer.setName("Brandy Doe");
         customer.setAge(40);
         customer.setEmail("john@gmail.com");
-        customerCrudService.createCustomer(customer);
+
+        Address address = new Address();
+        address.setStreet("1234 Main Street");
+        address.setCity("New York");
+        address.setState("NY");
+        address.setZipCode("10001");
+
+        customerCrudService.createCustomerWithAddress(customer, List.of(address));
     }
 
     private void deleteTestCustomer() {

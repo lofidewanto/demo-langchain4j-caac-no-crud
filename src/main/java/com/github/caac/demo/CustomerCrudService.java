@@ -10,10 +10,14 @@ import java.util.Optional;
 @Service
 public class CustomerCrudService {
 
-    private CustomerRepository customerRepository;
+    private final AddressRepository addressRepository;
 
-    public CustomerCrudService(CustomerRepository customerRepository) {
+    private final CustomerRepository customerRepository;
+
+    public CustomerCrudService(CustomerRepository customerRepository,
+                               AddressRepository addressRepository) {
         this.customerRepository = customerRepository;
+        this.addressRepository = addressRepository;
     }
 
     @Transactional(readOnly = true)
@@ -45,6 +49,7 @@ public class CustomerCrudService {
 
     @Transactional
     public void deleteAllCustomers() {
+        addressRepository.deleteAllInBatch();
         customerRepository.deleteAllInBatch();
     }
 }
