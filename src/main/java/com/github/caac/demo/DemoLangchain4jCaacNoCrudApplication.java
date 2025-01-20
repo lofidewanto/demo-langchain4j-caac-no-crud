@@ -26,7 +26,7 @@ public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         createTestCustomer();
 
-        String chatId = "interactive-chat-id";
+        String chatId = "interactive-chat-id" + System.currentTimeMillis();
 
         // Turn on this line to use the chat in the console.
         // args = new String[] { "chat-id" };
