@@ -24,12 +24,13 @@ public class CustomerAgentTool {
     @Validated
     @Transactional(readOnly = true)
     @Tool("""
-            Retrieves all customers.
+            Retrieves all customers  and returns a list of customers.
             """)
-    public List<Customer> getAllCustomers() {
+    public String getAllCustomers() {
         logger.info("getAllCustomers with no parameter");
         List<Customer> all = customerRepository.findAll();
-        return all;
+        String allString = all.toString();
+        return allString;
     }
 
     @Validated

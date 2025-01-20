@@ -2,8 +2,6 @@ package com.github.caac.demo;
 
 import dev.langchain4j.service.Result;
 import dev.langchain4j.service.tool.ToolExecution;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -30,6 +28,9 @@ public class CustomerAgentServiceIT {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     private void createTestCustomer() {
         Customer customer = new Customer();
         customer.setName("Brother John");
@@ -48,6 +49,7 @@ public class CustomerAgentServiceIT {
     }
 
     private void deleteTestCustomer() {
+        addressRepository.deleteAllInBatch();
         customerRepository.deleteAllInBatch();
     }
 

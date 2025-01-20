@@ -97,8 +97,7 @@ public class Customer {
         return "Customer{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
-                ", email='" + email + '\'' +
-                ", addresses=" + addresses +
+                ", email='" + email +
                 '}';
     }
 
