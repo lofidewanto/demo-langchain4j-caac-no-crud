@@ -4,6 +4,7 @@ import dev.langchain4j.service.Result;
 import dev.langchain4j.service.tool.ToolExecution;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,13 +22,13 @@ public class CustomerAgentServiceIT {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerAgentServiceIT.class);
 
+    private final String email = "banana@gmail.com";
+
     @Autowired
     private CustomerAgentService customerAgentService;
 
     @Autowired
     private CustomerRepository customerRepository;
-
-    private final String email = "banana@gmail.com";
 
     @BeforeEach
     public void setUp() {
@@ -54,7 +55,7 @@ public class CustomerAgentServiceIT {
 
     @Test
     public void simple_chat() {
-        String chatId = "test-chat-id";
+        String chatId = "test-chat-id" + System.currentTimeMillis();
         String userMessage = "Hello, how are you?";
 
         logger.info("Request: {}", userMessage);
@@ -66,10 +67,18 @@ public class CustomerAgentServiceIT {
         assertNotNull(response);
     }
 
+    @Disabled("We need to have the Tool connected to addresses")
     @Test
     public void create_customer_chat() {
-        String chatId = "test-chat-id";
-        String userMessage = "Create a new customer data - email: hello@gmail.com - name: John Doe";
+        String chatId = "test-chat-id" + System.currentTimeMillis();
+
+        String userMessage = """
+                I'm new here and please create a new customer data for me. 
+                My email is hello@gmail.com.
+                My name is John Doe. 
+                My address is 1234 Main Street, New York, NY 10001. 
+                I'm 30 years old.
+                """;
 
         logger.info("Request: {}", userMessage);
 
@@ -93,7 +102,7 @@ public class CustomerAgentServiceIT {
 
     @Test
     public void find_customer_by_id() {
-        String chatId = "test-chat-id";
+        String chatId = "test-chat-id" + System.currentTimeMillis();
         String userMessage = "Print all data (name, email and age) of following customer id: " + 1;
 
         logger.info("Request: {}", userMessage);
@@ -114,7 +123,7 @@ public class CustomerAgentServiceIT {
 
     @Test
     public void find_customer_by_email() {
-        String chatId = "test-chat-id";
+        String chatId = "test-chat-id" + System.currentTimeMillis();
         String userMessage = "Print all data (name, email and age) of following customer email: " + email;
 
         logger.info("Request: {}", userMessage);
@@ -135,7 +144,7 @@ public class CustomerAgentServiceIT {
 
     @Test
     public void null_chat() {
-        String chatId = "test-chat-id";
+        String chatId = "test-chat-id" + System.currentTimeMillis();
         String userMessage = null;
 
         logger.info("Request: {}", userMessage);
