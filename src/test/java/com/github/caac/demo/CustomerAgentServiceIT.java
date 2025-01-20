@@ -67,20 +67,20 @@ public class CustomerAgentServiceIT {
         assertNotNull(response);
     }
 
-    @Disabled("We need to have the Tool connected to addresses")
+    @Disabled("Not yet correctly implemented.")
     @Test
     @Transactional
-    public void create_customer_chat() {
+    public void create_simple_customer_chat() {
         createTestCustomer();
 
         String chatId = "test-chat-id" + System.currentTimeMillis();
 
         String userMessage = """
-                I'm new here and please create a new customer data for me. 
-                My email is hello@gmail.com.
-                My name is John Doe. 
-                My address is 1234 Main Street, New York, NY 10001. 
+                I'm new here and please create a new customer for me. 
+                My customer email is hello@gmail.com.
+                My customer name is John Doe. 
                 I'm 30 years old.
+                I have no addresses.
                 """;
 
         logger.info("Request: {}", userMessage);
@@ -90,12 +90,8 @@ public class CustomerAgentServiceIT {
         assertNotNull(response);
         logger.info("Response: {}", response.content());
 
-        userMessage = "Yes, I confirmed to add this record.";
-        logger.info("Request: {}", userMessage);
+        userMessage = "I confirm for the creation of my customer data.";
         response = customerAgentService.chat(chatId, userMessage);
-
-        assertNotNull(response);
-        logger.info("Response: {}", response.content());
 
         // Check the database
         Optional<Customer> customer = customerRepository.findByEmail("hello@gmail.com");

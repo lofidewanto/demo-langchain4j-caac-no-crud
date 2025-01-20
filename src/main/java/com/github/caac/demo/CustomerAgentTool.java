@@ -1,5 +1,6 @@
 package com.github.caac.demo;
 
+import dev.langchain4j.agent.tool.P;
 import dev.langchain4j.agent.tool.Tool;
 import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -53,9 +54,11 @@ public class CustomerAgentTool {
 
     @Transactional
     @Tool("""
-            Creates a new customer with one or more addresses.
+            Creates a new customer with a list of addresses and returns the 
+            created customer.
             """)
-    public Customer createCustomerWithAddress(@NotNull Customer customer, @NotNull List<Address> addresses) {
+    public Customer createCustomerWithAddress(@NotNull @P("The customer object") Customer customer,
+                                              @NotNull @P("A list of address objects") List<Address> addresses) {
         logger.info("createCustomerWithAddress");
         customer.setAddresses(addresses);
         addresses.forEach(address -> address.setCustomer(customer));
@@ -65,10 +68,10 @@ public class CustomerAgentTool {
 
     @Transactional
     @Tool("""
-            Creates a new customer.
+            Creates a new customer without addresses and returns the created customer.
             """)
-    public Customer createCustomer(@NotNull Customer customer) {
-        logger.info("createCustomer");
+    public Customer createCustomer(@NotNull @P("The customer object")  Customer customer) {
+        logger.info("createCustomer parameter: " + customer);
         return customerRepository.save(customer);
     }
 
