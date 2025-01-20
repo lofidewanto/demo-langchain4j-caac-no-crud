@@ -43,6 +43,7 @@ public class CustomerAgentServiceIT {
         address.setZipCode("10001");
         address.setCustomer(customer);
 
+        customer.addAddress(address);
         customerRepository.save(customer);
     }
 

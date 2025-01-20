@@ -1,5 +1,6 @@
 package com.github.caac.demo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -31,7 +32,7 @@ public class Customer {
     private String email;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Address> addresses;
+    private List<Address> addresses = new ArrayList<>();
 
     public Customer() {
     }
@@ -79,6 +80,16 @@ public class Customer {
 
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public void addAddress(Address address) {
+        addresses.add(address);
+        address.setCustomer(this);
+    }
+
+    public void removeAddress(Address address) {
+        addresses.remove(address);
+        address.setCustomer(null);
     }
 
     @Override

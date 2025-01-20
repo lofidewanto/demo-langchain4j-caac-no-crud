@@ -28,7 +28,8 @@ public class CustomerAgentTool {
             """)
     public List<Customer> getAllCustomers() {
         logger.info("getAllCustomers with no parameter");
-        return customerRepository.findAll();
+        List<Customer> all = customerRepository.findAll();
+        return all;
     }
 
     @Validated
