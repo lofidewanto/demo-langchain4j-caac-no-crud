@@ -1,13 +1,19 @@
 # demo-langchain4j-caac-no-crud
 Demo Comparison of CaaC (Chat as Code) Business Logics vs. CRUD (Create Read Update Delete) Business Logics.
 
-# Run the database user interface
-H2 Console: http://localhost:8080/caac/h2-console/
+# Install and run Ollama first
+https://ollama.com
 
 # Run the application
 ```
 mvn spring-boot:run -Dspring-boot.run.arguments=chat-id
 ```
+
+# Run the database user interface
+H2 Console: http://localhost:8080/caac/h2-console
+
+# The Story
+...
 
 # Chat and conversation with the CaaC (Chat as Code) Business Logics
 - Print all data of following customer: john@gmail.com 
