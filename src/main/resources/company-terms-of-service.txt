@@ -1,10 +1,10 @@
 These Terms of Service govern your experience with "DieSoon."  
 
-By adding, deleting, or changing customers, you agree to the following terms:  
+By adding, deleting, or changing customer data, you agree to the following terms:
 
 1. **Adding Customers**  
 - Adding one or more customers is free of charge.  
-- Ensure the accuracy of the customer’s name and email.  
+- Ensure the accuracy of the customer’s email.
 
 2. **Changing Customers**  
 - Changes take 48 hours to reflect across all company systems.  
@@ -20,7 +20,8 @@ By adding, deleting, or changing addresses, you agree to the following terms:
 
 1. **Adding One or More Addresses**  
 - Adding one or more addresses is free of charge.  
-- Ensure the accuracy of the customer’s name and email.  
+- Ensure the accuracy of the customer’s email before you can add addresses
+to the customer.
 
 2. **Changing Addresses**  
 - Changes take 48 hours to reflect across all company systems.  
