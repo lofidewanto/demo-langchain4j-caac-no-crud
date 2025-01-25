@@ -77,7 +77,11 @@ public class CustomerTool {
             Creates a new customer and returns the 
             created customer.
             """)
-    public CustomerDto createCustomer(@NotNull @P("The customer object") CustomerDto arg0) {
+    public CustomerDto createCustomer(CustomerDto arg0) {
+        if (arg0.getName() == null || arg0.getEmail() == null || arg0.getAge() == 0) {
+            throw new IllegalArgumentException("Customer name, email and age cannot be null.");
+        }
+
         logger.info("createCustomer with parameter: " + arg0.getName() + ", " + arg0.getEmail() + ", " + arg0.getAge());
 
         Customer customer = new Customer(arg0.getEmail(), arg0.getName(), arg0.getAge());
