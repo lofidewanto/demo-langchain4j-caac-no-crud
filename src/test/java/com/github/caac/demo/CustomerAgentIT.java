@@ -2,7 +2,6 @@ package com.github.caac.demo;
 
 import dev.langchain4j.service.Result;
 import dev.langchain4j.service.tool.ToolExecution;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,9 @@ public class CustomerAgentIT {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerAgentIT.class);
 
-    private final String email = "banana@gmail.com";
+    private final String bananaEmail = "banana@gmail.com";
+
+    private final String appleEmail ="apple@gmail.com";
 
     @Autowired
     private CustomerAgent customerAgent;
@@ -31,17 +32,34 @@ public class CustomerAgentIT {
     @Autowired
     private AddressRepository addressRepository;
 
-    private Customer createTestCustomer() {
+    private Customer createTestCustomer1() {
         Customer customer = new Customer();
         customer.setName("Brother John");
         customer.setAge(40);
-        customer.setEmail(email);
+        customer.setEmail(bananaEmail);
 
         Address address = new Address();
         address.setStreet("1234 Main Street");
         address.setCity("New York");
         address.setState("NY");
         address.setZipCode("10001");
+        address.setCustomer(customer);
+
+        customer.addAddress(address);
+        return customerRepository.save(customer);
+    }
+
+    private Customer createTestCustomer2() {
+        Customer customer = new Customer();
+        customer.setName("Junie Tjahaja");
+        customer.setAge(50);
+        customer.setEmail(appleEmail);
+
+        Address address = new Address();
+        address.setStreet("1234 Horror Street");
+        address.setCity("Los Angeles");
+        address.setState("LA");
+        address.setZipCode("90009");
         address.setCustomer(customer);
 
         customer.addAddress(address);
@@ -71,7 +89,7 @@ public class CustomerAgentIT {
     @Test
     @Transactional
     public void create_simple_customer_chat() {
-        createTestCustomer();
+        createTestCustomer1();
 
         String chatId = "test-chat-id" + System.currentTimeMillis();
 
@@ -108,7 +126,7 @@ public class CustomerAgentIT {
     @Test
     @Transactional
     public void find_customer_by_id() {
-        Customer customer = createTestCustomer();
+        Customer customer = createTestCustomer1();
         Long customerId = customer.getId();
 
         String chatId = "test-chat-id" + System.currentTimeMillis();
@@ -126,7 +144,7 @@ public class CustomerAgentIT {
         logger.info("Response: {}", answer);
 
         // Check the database
-        Optional<Customer> customerChecked = customerRepository.findByEmail(email);
+        Optional<Customer> customerChecked = customerRepository.findByEmail(bananaEmail);
         logger.info("Customer data with CRUD - Customer ID: {}", customerChecked.get().getId());
 
         deleteTestCustomer();
@@ -135,10 +153,10 @@ public class CustomerAgentIT {
     @Test
     @Transactional
     public void find_customer_by_email() {
-        createTestCustomer();
+        createTestCustomer1();
 
         String chatId = "test-chat-id" + System.currentTimeMillis();
-        String userMessage = "Print all data (name, email and age) of following customer email: " + email;
+        String userMessage = "Print all data (name, email and age) of following customer email: " + bananaEmail;
 
         logger.info("Request: {}", userMessage);
 
@@ -152,7 +170,7 @@ public class CustomerAgentIT {
         logger.info("Response: {}", answer);
 
         // Check the database
-        Optional<Customer> customerChecked = customerRepository.findByEmail(email);
+        Optional<Customer> customerChecked = customerRepository.findByEmail(bananaEmail);
         logger.info("Customer data: {}", customerChecked.get().getName());
 
         deleteTestCustomer();
@@ -175,10 +193,11 @@ public class CustomerAgentIT {
     @Test
     @Transactional
     public void find_all_customers() {
-        createTestCustomer();
+        createTestCustomer1();
+        createTestCustomer2();
 
         String chatId = "test-chat-id" + System.currentTimeMillis();
-        String userMessage = "Print all customers from your data.";
+        String userMessage = "Print all customers from your data. Show them to me.";
 
         logger.info("Request: {}", userMessage);
 
@@ -193,7 +212,7 @@ public class CustomerAgentIT {
 
         // Check the database
         long count = customerRepository.count();
-        assertEquals(count, 1);
+        assertEquals(count, 2);
 
         deleteTestCustomer();
     }
