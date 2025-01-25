@@ -67,7 +67,7 @@ public class CustomerAgentIT {
         assertNotNull(response);
     }
 
-    @Disabled("Not yet correctly implemented.")
+    // @Disabled("Not yet correctly implemented.")
     @Test
     @Transactional
     public void create_simple_customer_chat() {
@@ -88,10 +88,14 @@ public class CustomerAgentIT {
         Result<String> response = customerAgent.chat(chatId, userMessage);
 
         assertNotNull(response);
-        logger.info("Response: {}", response.content());
 
-        userMessage = "I confirm for the creation of my customer data.";
-        response = customerAgent.chat(chatId, userMessage);
+        String answer = response.content();
+        logger.info("Response: {}", answer);
+        List<ToolExecution> toolExecutions = response.toolExecutions();
+        logger.info("Tool Executions: {}", toolExecutions);
+
+        // userMessage = "I confirm for the creation of my customer data.";
+        // response = customerAgent.chat(chatId, userMessage);
 
         // Check the database
         Optional<Customer> customer = customerRepository.findByEmail("hello@gmail.com");
