@@ -78,7 +78,7 @@ public class CustomerTool {
             created customer.
             """)
     public CustomerDto createCustomer(@NotNull @P("The customer object") CustomerDto arg0) {
-        logger.info("createCustomer with parameter: " + arg0.toString());
+        logger.info("createCustomer with parameter: " + arg0.getName() + ", " + arg0.getEmail() + ", " + arg0.getAge());
 
         Customer customer = new Customer(arg0.getEmail(), arg0.getName(), arg0.getAge());
         Customer savedCustomer = customerRepository.save(customer);
