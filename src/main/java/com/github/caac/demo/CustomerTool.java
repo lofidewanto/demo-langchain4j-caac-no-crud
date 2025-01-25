@@ -61,7 +61,7 @@ public class CustomerTool {
     @Tool("""
             Retrieves a customer by the email.
             """)
-    public CustomerDto getCustomerByEmail(@NotNull(message = "Customer email cannot be null.")  String arg0) {
+    public CustomerDto getCustomerByEmail(@NotNull(message = "Customer email cannot be null.") String arg0) {
         logger.info("getCustomerByEmail parameter: " + arg0);
 
         var customer = customerRepository.findByEmail(arg0).get();
@@ -74,30 +74,14 @@ public class CustomerTool {
 
     @Transactional
     @Tool("""
-            Creates a new customer with a list of addresses and returns the 
+            Creates a new customer and returns the 
             created customer.
             """)
-    public CustomerDto createCustomerWithAddress(@NotNull @P("The customer object") Customer arg0,
-                                              @NotNull @P("A list of address objects") List<Address> arg1) {
-        logger.info("createCustomerWithAddress");
-        arg0.setAddresses(arg1);
-        arg1.forEach(address -> address.setCustomer(arg0));
+    public CustomerDto createCustomer(@NotNull @P("The customer object") CustomerDto arg0) {
+        logger.info("createCustomer with parameter: " + arg0.toString());
 
-        Customer savedCustomer = customerRepository.save(arg0);
-
-        var addressDtoList = savedCustomer.getAddresses().stream().map(a ->
-                new AddressDto(a.getId(), a.getStreet(), a.getCity(), a.getState(), a.getZipCode())).toList();
-        return new CustomerDto(savedCustomer.getId(), savedCustomer.getName(), savedCustomer.getAge(),
-                savedCustomer.getEmail(), addressDtoList);
-    }
-
-    @Transactional
-    @Tool("""
-            Creates a new customer without addresses and returns the created customer.
-            """)
-    public CustomerDto createCustomer(@NotNull @P("The customer object")  Customer arg0) {
-        logger.info("createCustomer parameter: " + arg0);
-        Customer savedCustomer = customerRepository.save(arg0);
+        Customer customer = new Customer(arg0.getEmail(), arg0.getName(), arg0.getAge());
+        Customer savedCustomer = customerRepository.save(customer);
 
         return new CustomerDto(savedCustomer.getId(), savedCustomer.getName(), savedCustomer.getAge(),
                 savedCustomer.getEmail(), null);

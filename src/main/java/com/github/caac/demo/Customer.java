@@ -37,7 +37,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String name, int age) {
+    public Customer(String email, String name, int age) {
+        this.email = email;
         this.name = name;
         this.age = age;
     }
