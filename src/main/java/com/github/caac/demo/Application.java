@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 @SpringBootApplication
-public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
+public class Application implements CommandLineRunner {
 
     @Autowired
     private CustomerAgentService customerAgentService;
@@ -19,7 +19,7 @@ public class DemoLangchain4jCaacNoCrudApplication implements CommandLineRunner {
     private CustomerCrudService customerCrudService;
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoLangchain4jCaacNoCrudApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
     @Override
