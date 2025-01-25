@@ -112,8 +112,15 @@ public class CustomerAgentIT {
         List<ToolExecution> toolExecutions = response.toolExecutions();
         logger.info("Tool Executions: {}", toolExecutions);
 
-        // userMessage = "I confirm for the creation of my customer data.";
-        // response = customerAgent.chat(chatId, userMessage);
+        userMessage = "I confirm for the creation of my customer data.";
+        response = customerAgent.chat(chatId, userMessage);
+
+        assertNotNull(response);
+
+        answer = response.content();
+        logger.info("Response: {}", answer);
+        toolExecutions = response.toolExecutions();
+        logger.info("Tool Executions: {}", toolExecutions);
 
         // Check the database
         Optional<Customer> customer = customerRepository.findByEmail("hello@gmail.com");

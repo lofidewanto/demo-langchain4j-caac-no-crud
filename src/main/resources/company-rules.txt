@@ -17,6 +17,9 @@ A customer can create a customer data record with the following information:
 - Customer name
 - Customer age
 
+If an error occurs during the creation of a customer data record, you must try to repeat the operation
+3 times before giving up. After 3 failed attempts, you must inform the customer that the operation failed.
+
 Before a customer can change one or more addresses, you must ensure the 
 following information is available: customer email.
 
