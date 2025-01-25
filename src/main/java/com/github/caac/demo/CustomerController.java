@@ -11,28 +11,28 @@ public class CustomerController {
 
     private static Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
-    private final CustomerCrudService customerCrudService;
+    private final CustomerService customerService;
 
-    private final AddressCrudService addressCrudService;
+    private final AddressService addressService;
 
-    private final CustomerAgentService customerAgentService;
+    private final CustomerAgent customerAgent;
 
-    public CustomerController(CustomerCrudService customerCrudService, AddressCrudService addressCrudService, CustomerAgentService customerAgentService) {
-        this.customerCrudService = customerCrudService;
-        this.addressCrudService = addressCrudService;
-        this.customerAgentService = customerAgentService;
+    public CustomerController(CustomerService customerService, AddressService addressService, CustomerAgent customerAgent) {
+        this.customerService = customerService;
+        this.addressService = addressService;
+        this.customerAgent = customerAgent;
     }
 
     @GetMapping("/customer_crud/{id}")
     public Customer getCustomer(@PathVariable Long id) {
         logger.debug("Getting customer with id: {}", id);
-        return customerCrudService.getCustomerById(id);
+        return customerService.getCustomerById(id);
     }
 
     @PostMapping("/customer_crud")
     public Customer createCustomerWithAddress(@RequestBody Customer customer, @RequestParam List<Address> addresses) {
         logger.debug("Creating customer with addresses: {}", customer);
-        return customerCrudService.createCustomerWithAddress(customer, addresses);
+        return customerService.createCustomerWithAddress(customer, addresses);
     }
 
 }

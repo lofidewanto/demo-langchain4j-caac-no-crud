@@ -24,12 +24,12 @@ import dev.langchain4j.service.Result;
 
 @Disabled("This test is ignored because it will use Testcontainers.")
 @SpringBootTest
-class CustomerAgentServiceTcIT {
+class CustomerAgentTestcontainersIT {
 
     private static OllamaContainer ollamaContainer;
 
     @Autowired
-    private CustomerAgentService customerAgentService;
+    private CustomerAgent customerAgent;
 
     private static int portOllama = 11434;
 
@@ -119,7 +119,7 @@ class CustomerAgentServiceTcIT {
         String chatId = "test-chat-id";
         String userMessage = "I would like to change my booking.";
 
-        Result<String> response = customerAgentService.chat(chatId, userMessage);
+        Result<String> response = customerAgent.chat(chatId, userMessage);
 
         assertNotNull(response);
         System.out.println("Simple Chat: " + response);

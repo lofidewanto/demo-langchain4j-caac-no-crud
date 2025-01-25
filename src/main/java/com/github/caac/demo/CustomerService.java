@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CustomerCrudService {
+public class CustomerService {
 
     private final AddressRepository addressRepository;
 
     private final CustomerRepository customerRepository;
 
-    public CustomerCrudService(CustomerRepository customerRepository,
-                               AddressRepository addressRepository) {
+    public CustomerService(CustomerRepository customerRepository,
+                           AddressRepository addressRepository) {
         this.customerRepository = customerRepository;
         this.addressRepository = addressRepository;
     }

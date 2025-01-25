@@ -16,14 +16,14 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class CustomerAgentServiceIT {
+public class CustomerAgentIT {
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomerAgentServiceIT.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomerAgentIT.class);
 
     private final String email = "banana@gmail.com";
 
     @Autowired
-    private CustomerAgentService customerAgentService;
+    private CustomerAgent customerAgent;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -60,7 +60,7 @@ public class CustomerAgentServiceIT {
 
         logger.info("Request: {}", userMessage);
 
-        Result<String> response = customerAgentService.chat(chatId, userMessage);
+        Result<String> response = customerAgent.chat(chatId, userMessage);
 
         logger.info("Response: {}", response.content());
 
@@ -85,13 +85,13 @@ public class CustomerAgentServiceIT {
 
         logger.info("Request: {}", userMessage);
 
-        Result<String> response = customerAgentService.chat(chatId, userMessage);
+        Result<String> response = customerAgent.chat(chatId, userMessage);
 
         assertNotNull(response);
         logger.info("Response: {}", response.content());
 
         userMessage = "I confirm for the creation of my customer data.";
-        response = customerAgentService.chat(chatId, userMessage);
+        response = customerAgent.chat(chatId, userMessage);
 
         // Check the database
         Optional<Customer> customer = customerRepository.findByEmail("hello@gmail.com");
@@ -112,7 +112,7 @@ public class CustomerAgentServiceIT {
 
         logger.info("Request: {}", userMessage);
 
-        Result<String> response = customerAgentService.chat(chatId, userMessage);
+        Result<String> response = customerAgent.chat(chatId, userMessage);
 
         String answer = response.content();
         List<ToolExecution> toolExecutions = response.toolExecutions();
@@ -138,7 +138,7 @@ public class CustomerAgentServiceIT {
 
         logger.info("Request: {}", userMessage);
 
-        Result<String> response = customerAgentService.chat(chatId, userMessage);
+        Result<String> response = customerAgent.chat(chatId, userMessage);
 
         String answer = response.content();
         List<ToolExecution> toolExecutions = response.toolExecutions();
@@ -162,7 +162,7 @@ public class CustomerAgentServiceIT {
         logger.info("Request: {}", userMessage);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            customerAgentService.chat(chatId, userMessage);
+            customerAgent.chat(chatId, userMessage);
         });
 
         logger.info(exception.getMessage());
@@ -178,7 +178,7 @@ public class CustomerAgentServiceIT {
 
         logger.info("Request: {}", userMessage);
 
-        Result<String> response = customerAgentService.chat(chatId, userMessage);
+        Result<String> response = customerAgent.chat(chatId, userMessage);
 
         String answer = response.content();
         List<ToolExecution> toolExecutions = response.toolExecutions();

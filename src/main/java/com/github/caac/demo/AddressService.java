@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class AddressCrudService {
+public class AddressService {
 
     private AddressRepository addressRepository;
 
-    public AddressCrudService(AddressRepository addressRepository) {
+    public AddressService(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
     }
 

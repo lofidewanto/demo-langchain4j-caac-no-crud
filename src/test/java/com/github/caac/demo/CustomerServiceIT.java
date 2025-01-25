@@ -11,11 +11,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class CustomerCrudServiceIT {
+class CustomerServiceIT {
 
     private final String email = "john.doe@example.com";
     @Autowired
-    private CustomerCrudService customerCrudService;
+    private CustomerService customerService;
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -46,7 +46,7 @@ class CustomerCrudServiceIT {
         address.setState("NY");
         address.setZipCode("10001");
 
-        Customer cutomerCreated = customerCrudService.createCustomerWithAddress(customer, List.of(address));
+        Customer cutomerCreated = customerService.createCustomerWithAddress(customer, List.of(address));
 
         assertNotNull(cutomerCreated);
         assertEquals("john.doe@example.com", cutomerCreated.getEmail());
@@ -62,7 +62,7 @@ class CustomerCrudServiceIT {
         customer.setAge(30);
         customer.setEmail("john.doe@example.com");
 
-        Customer cutomerCreated = customerCrudService.createCustomer(customer);
+        Customer cutomerCreated = customerService.createCustomer(customer);
 
         assertNotNull(cutomerCreated);
         assertEquals("john.doe@example.com", cutomerCreated.getEmail());
@@ -78,7 +78,7 @@ class CustomerCrudServiceIT {
         customer.setEmail("invalid-email");
 
         Exception exception = assertThrows(ConstraintViolationException.class, () -> {
-            customerCrudService.createCustomer(customer);
+            customerService.createCustomer(customer);
         });
 
         System.out.println(exception.getMessage());
@@ -89,7 +89,7 @@ class CustomerCrudServiceIT {
     void get_customer_by_email() {
         createTestCustomer();
 
-        Customer customerByEmail = customerCrudService.getCustomerByEmail(email);
+        Customer customerByEmail = customerService.getCustomerByEmail(email);
 
         assertEquals(email, customerByEmail.getEmail());
 

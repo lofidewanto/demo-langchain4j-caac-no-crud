@@ -13,13 +13,13 @@ import java.util.List;
 
 @Component
 @Validated
-public class CustomerAgentTool {
+public class CustomerTool {
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomerAgentTool.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomerTool.class);
 
     private final CustomerRepository customerRepository;
 
-    public CustomerAgentTool(CustomerRepository service) {
+    public CustomerTool(CustomerRepository service) {
         this.customerRepository = service;
     }
 

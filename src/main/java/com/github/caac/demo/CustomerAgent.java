@@ -7,7 +7,7 @@ import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.spring.AiService;
 
 @AiService
-public interface CustomerAgentService {
+public interface CustomerAgent {
 
     @SystemMessage(fromResource = "company-rules.txt")
     Result<String> chat(@MemoryId String chatId, @UserMessage String userMessage);

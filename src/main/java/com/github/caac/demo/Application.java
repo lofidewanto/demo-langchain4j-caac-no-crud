@@ -13,10 +13,10 @@ import java.util.Scanner;
 public class Application implements CommandLineRunner {
 
     @Autowired
-    private CustomerAgentService customerAgentService;
+    private CustomerAgent customerAgent;
 
     @Autowired
-    private CustomerCrudService customerCrudService;
+    private CustomerService customerService;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -55,7 +55,7 @@ public class Application implements CommandLineRunner {
                 break;
             }
 
-            Result<String> response = customerAgentService.chat(chatId, userMessage);
+            Result<String> response = customerAgent.chat(chatId, userMessage);
             System.out.println("Agent: " + response.content());
             System.out.println();
         }
@@ -75,10 +75,10 @@ public class Application implements CommandLineRunner {
         address.setState("NY");
         address.setZipCode("10001");
 
-        customerCrudService.createCustomerWithAddress(customer, List.of(address));
+        customerService.createCustomerWithAddress(customer, List.of(address));
     }
 
     private void deleteTestCustomer() {
-        customerCrudService.deleteAllCustomers();
+        customerService.deleteAllCustomers();
     }
 }

@@ -14,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-class CustomerCrudServiceTest {
+class CustomerServiceTest {
 
     @Mock
     private CustomerRepository customerRepository;
 
     @InjectMocks
-    private CustomerCrudService customerCrudService;
+    private CustomerService customerService;
 
     @BeforeEach
     public void setUp() {
@@ -36,7 +36,7 @@ class CustomerCrudServiceTest {
 
         when(customerRepository.save(customer)).thenReturn(customer);
 
-        Customer result = customerCrudService.createCustomerWithAddress(customer, addresses);
+        Customer result = customerService.createCustomerWithAddress(customer, addresses);
 
         assertNotNull(result);
         assertEquals(2, result.getAddresses().size());
@@ -53,7 +53,7 @@ class CustomerCrudServiceTest {
 
         when(customerRepository.findById(personId)).thenReturn(Optional.of(customer));
 
-        Customer result = customerCrudService.getCustomerById(personId);
+        Customer result = customerService.getCustomerById(personId);
 
         assertNotNull(result);
         assertEquals(personId, result.getId());
@@ -67,7 +67,7 @@ class CustomerCrudServiceTest {
 
         when(customerRepository.save(customer)).thenReturn(customer);
 
-        Customer result = customerCrudService.createCustomer(customer);
+        Customer result = customerService.createCustomer(customer);
 
         assertNotNull(result);
         assertEquals("test@example.com", result.getEmail());
