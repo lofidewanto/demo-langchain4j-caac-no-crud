@@ -27,19 +27,11 @@ public class CustomerTool {
     @Tool("""
             Retrieves all customers  and returns a list of customers.
             """)
-    public List<CustomerDto> getAllCustomers() {
+    public List<Customer> getAllCustomers() {
         logger.info("getAllCustomers with no parameter");
 
         List<Customer> all = customerRepository.findAll();
-
-        List<CustomerDto> customerDtos = all.stream().map(customer -> {
-            var addressDtoList = customer.getAddresses().stream().map(a ->
-                    new AddressDto(a.getId(), a.getStreet(), a.getCity(), a.getState(), a.getZipCode())).toList();
-            return new CustomerDto(customer.getId(), customer.getName(), customer.getAge(),
-                    customer.getEmail(), addressDtoList);
-        }).toList();
-
-        return customerDtos;
+        return all;
     }
 
     @Transactional(readOnly = true)
