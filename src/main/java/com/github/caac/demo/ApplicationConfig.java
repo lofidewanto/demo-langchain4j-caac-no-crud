@@ -14,7 +14,7 @@ import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 
 @Configuration
-public class LangChain4jConfig {
+public class ApplicationConfig {
 
     @Bean
     ChatMemoryProvider chatMemoryProvider() {
