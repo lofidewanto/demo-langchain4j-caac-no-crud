@@ -18,7 +18,7 @@ H2 Console: http://localhost:8080/caac/h2-console
 What kind of company this is and what kind of support this company offers are described in these two text files.
 
 1. Company Rules
-src/main/resources/company-rules.txt
+src/main/resources/customer-agent.txt
 
 2. Company Terms of Service
 src/main/resources/company-terms-of-service.txt
