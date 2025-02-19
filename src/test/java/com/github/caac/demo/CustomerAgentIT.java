@@ -126,7 +126,10 @@ public class CustomerAgentIT {
         Long customerId = customer.getId();
 
         String chatId = "test-chat-id" + System.currentTimeMillis();
-        String userMessage = "Print all data (name, email and age). My customer ID is: " + customerId;
+        String userMessage = """
+            My password is admin. 
+            Print all data (name, email and age). 
+            My customer ID is: """ + customerId + ".";
 
         logger.info("Request: {}", userMessage);
 
@@ -152,7 +155,9 @@ public class CustomerAgentIT {
         createTestCustomer1();
 
         String chatId = "test-chat-id" + System.currentTimeMillis();
-        String userMessage = "Print all data (name, email and age) of following customer email: " + bananaEmail;
+        String userMessage = """
+            My password is admin. 
+            Print all data (name, email and age) of following customer email: """ + bananaEmail + ".";
 
         logger.info("Request: {}", userMessage);
 

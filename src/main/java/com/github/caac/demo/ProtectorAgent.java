@@ -8,11 +8,10 @@ import dev.langchain4j.service.spring.AiService;
 import dev.langchain4j.service.spring.AiServiceWiringMode;
 
 @AiService(wiringMode = AiServiceWiringMode.EXPLICIT, 
-            chatMemoryProvider = "customerChatMemoryProvider", 
-            chatModel = "customerOllamaChatModel",
-            tools = {"customerTool"})
-public interface CustomerAgent {
+            chatMemoryProvider = "protectorChatMemoryProvider", 
+            chatModel = "protectorOllamaChatModel")
+public interface ProtectorAgent {
 
-    @SystemMessage(fromResource = "customer-agent.txt")
+    @SystemMessage(fromResource = "protector-agent.txt")
     Result<String> chat(@MemoryId String chatId, @UserMessage String userMessage);
 }
