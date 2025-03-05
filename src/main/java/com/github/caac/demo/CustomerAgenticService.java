@@ -40,4 +40,14 @@ public class CustomerAgenticService {
             return chatCustomer.content();
         }
     }
+
+    public String chatWithAgentsWithoutProtection(String userMessage) {
+        // 1. Check with the CustomerAgent
+
+        Result<String> chatCustomer = customerAgent.chat("customer", userMessage);
+        logger.info("*** CustomerAgent content: {}", chatCustomer.content());
+        logger.info("*** CustomerAgent tools: {}", chatCustomer.toolExecutions());
+
+        return chatCustomer.content();
+    }
 }
