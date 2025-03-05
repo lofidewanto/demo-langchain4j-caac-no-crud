@@ -83,6 +83,12 @@
 		</dependency>
 
 		<dependency>
+    		<groupId>com.twilio.sdk</groupId>
+    		<artifactId>twilio</artifactId>
+    		<version>10.6.10</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
