@@ -14,9 +14,14 @@ import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 
 @Configuration
 public class ApplicationConfig {
+
+    @Value("${spring.application.name}")
+    private String applicationName;
 
     @Bean
     OllamaChatModel customerOllamaChatModel(
@@ -77,5 +82,14 @@ public class ApplicationConfig {
                 .maxResults(2)
                 .minScore(0.6)
                 .build();
+    }
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title(applicationName)
+                        .version("1.0")
+                        .description("FeedSnap Chatbot REST APIs"));
     }
 }
