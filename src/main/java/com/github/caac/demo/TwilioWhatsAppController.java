@@ -27,13 +27,13 @@ public class TwilioWhatsAppController {
         this.customerAgenticService = customerAgenticService;
     }
 
-    @PostMapping("/send")
+    @PostMapping("/send-whatsapp")
     public String sendWhatsAppMessage(@RequestParam("to") String to,
             @RequestParam("message") String message) {
         return twilioWhatsAppService.sendWhatsAppMessage(to, message);
     }
 
-    @PostMapping("/receive")
+    @PostMapping("/receive-whatsapp-simple-test")
     public ResponseEntity<String> receiveWhatsAppMessage(@RequestBody MultiValuedMap<String, String> payload) {
         String from = payload.get("From").stream().findFirst().get();
         String body = payload.get("Body").stream().findFirst().get();
@@ -43,7 +43,7 @@ public class TwilioWhatsAppController {
         return ResponseEntity.ok("Message received");
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, value = "/receive-wa")
+    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, value = "/receive-whatsapp")
     public ResponseEntity<String> receiveMessage(@RequestParam Map<String, String> payload) {
         String from = payload.get("From");
         String body = payload.get("Body");
