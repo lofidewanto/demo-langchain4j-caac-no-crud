@@ -50,7 +50,7 @@ public class TwilioWhatsAppController {
 
         logger.info("Received message: {} from {}", body, from);
 
-        String response = customerAgenticService.chatWithAgentsWithoutProtection(body);
+        String response = customerAgenticService.chatWithAgentsWithoutProtection(from, body);
 
         String responseMessage = "<Response><Message>" + response + "</Message></Response>";
 

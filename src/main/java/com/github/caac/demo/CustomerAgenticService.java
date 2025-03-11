@@ -21,11 +21,11 @@ public class CustomerAgenticService {
         this.protectorAgent = protectorAgent;
     }
 
-    public String chatWithAgents(String userMessage) {
+    public String chatWithAgents(String chatId, String userMessage) {
         // 1. Check the incoming message with the ProtectorAgent
         // 2. If the message is not a threat, check with the CustomerAgent
 
-        String result = protectorAgent.check("protector", userMessage);
+        String result = protectorAgent.check(chatId, userMessage);
         if (result.toLowerCase().contains("unsafe")) {
             logger.warn("ProtectorAgent: The message is not safe.");
 
@@ -33,7 +33,7 @@ public class CustomerAgenticService {
         } else {
             logger.info("The message is safe.");
 
-            Result<String> chatCustomer = customerAgent.chat("customer", userMessage);
+            Result<String> chatCustomer = customerAgent.chat(chatId, userMessage);
             logger.info("*** CustomerAgent content: {}", chatCustomer.content());
             logger.info("*** CustomerAgent tools: {}", chatCustomer.toolExecutions());
 
@@ -41,10 +41,10 @@ public class CustomerAgenticService {
         }
     }
 
-    public String chatWithAgentsWithoutProtection(String userMessage) {
+    public String chatWithAgentsWithoutProtection(String chatId, String userMessage) {
         // 1. Check with the CustomerAgent
 
-        Result<String> chatCustomer = customerAgent.chat("customer", userMessage);
+        Result<String> chatCustomer = customerAgent.chat(chatId, userMessage);
         logger.info("*** CustomerAgent content: {}", chatCustomer.content());
         logger.info("*** CustomerAgent tools: {}", chatCustomer.toolExecutions());
 
