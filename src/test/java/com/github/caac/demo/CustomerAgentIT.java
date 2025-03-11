@@ -86,6 +86,21 @@ public class CustomerAgentIT {
     }
 
     @Test
+    public void simple_chat_who() {
+        String chatId = "test-chat-id" + System.currentTimeMillis();
+        String userMessage = "Hello, who are you?";
+
+        logger.info("Request: {}", userMessage);
+
+        Result<String> response = customerAgent.chat(chatId, userMessage);
+
+        logger.info("Response: {}", response.content());
+
+        assertNotNull(response);
+        assertTrue(response.content().contains("DieSoon"));
+    }
+
+    @Test
     @Transactional
     public void create_simple_customer_chat() {
         createTestCustomer1();
@@ -115,6 +130,7 @@ public class CustomerAgentIT {
         Optional<Customer> customer = customerRepository.findByEmail("hello@gmail.com");
         assertNotNull(customer.get());
         logger.info("Customer data: {}", customer.get());
+        assertTrue(answer.contains("new customer"));
 
         deleteTestCustomer();
     }
@@ -141,10 +157,13 @@ public class CustomerAgentIT {
         assertNotNull(response);
         logger.info("Tool Executions: {}", toolExecutions);
         logger.info("Response: {}", answer);
+        assertTrue(answer.contains(Long.toString(customerId)));
 
         // Check the database
         Optional<Customer> customerChecked = customerRepository.findByEmail(bananaEmail);
-        logger.info("Customer data with CRUD - Customer ID: {}", customerChecked.get().getId());
+        Long id = customerChecked.get().getId();
+        logger.info("Customer data with CRUD - Customer ID: {}", id);
+        assertEquals(customerId, id);
 
         deleteTestCustomer();
     }
