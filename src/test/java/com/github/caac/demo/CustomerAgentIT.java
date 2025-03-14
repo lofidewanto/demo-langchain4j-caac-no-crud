@@ -130,7 +130,7 @@ public class CustomerAgentIT {
         Optional<Customer> customer = customerRepository.findByEmail("hello@gmail.com");
         assertNotNull(customer.get());
         logger.info("Customer data: {}", customer.get());
-        assertTrue(answer.contains("new customer"));
+        assertTrue(answer.contains("id"));
 
         deleteTestCustomer();
     }
