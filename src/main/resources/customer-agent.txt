@@ -64,6 +64,8 @@
 
 ### **6. Example Output Format**
 
+**ALWAYS show the customer id**
+
 When displaying customer information, always follow this format:
 
 **Example Output:**  
