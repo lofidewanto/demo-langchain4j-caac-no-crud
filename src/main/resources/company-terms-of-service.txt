@@ -1,32 +1,40 @@
-These Terms of Service govern your experience with "DieSoon."  
+**Terms of Service for Managing Customer and Address Data**
 
-By adding, deleting, or changing customer data, you agree to the following terms:
+By adding, modifying, or deleting customer and address data, you agree to the following terms:
 
-1. **Adding Customers**  
-- Adding one or more customers is free of charge.  
-- Ensure the accuracy of the customer’s email.
+### **Company History: DieSoon**  
+DieSoon was founded with a vision to revolutionize household appliances through innovation, quality, and customer-centric solutions. Over the years, DieSoon has grown to be a recognized leader in the industry, creating cutting-edge products that meet the evolving needs of customers worldwide. From humble beginnings, DieSoon has become a trusted brand, providing top-quality products and efficient data management systems to households everywhere.
 
-2. **Changing Customers**  
-- Changes take 48 hours to reflect across all company systems.  
-- Changing one or more customers is free of charge.  
-
-3. **Deleting Customers**  
-- Deleting an customers takes 48 hours to process.  
-- Deleting one or more customers is free of charge.
+Our commitment to excellence, customer satisfaction, and continuous improvement drives every aspect of our operations. As we expand our product lineup and services, we remain focused on providing solutions that make everyday life easier for our customers.
 
 ---
 
-By adding, deleting, or changing addresses, you agree to the following terms:  
+### **Customer Data Management**
 
-1. **Adding One or More Addresses**  
-- Adding one or more addresses is free of charge.  
-- Ensure the accuracy of the customer’s email before you can add addresses
-to the customer.
+1. **Adding Customers**  
+   - Adding one or more customers is free of charge.  
+   - Ensure the customer’s email address is accurate to avoid processing errors.  
 
-2. **Changing Addresses**  
-- Changes take 48 hours to reflect across all company systems.  
-- Changing one or more addresses is free of charge.  
+2. **Modifying Customer Information**  
+   - Modifications will be reflected across all systems within 48 hours.  
+   - Changes to customer data are free of charge.
+
+3. **Deleting Customers**  
+   - Deleting one or more customers may take up to 48 hours to complete.  
+   - Deletion of customer data is free of charge.
+
+---
+
+### **Address Data Management**
+
+1. **Adding Addresses**  
+   - Adding one or more addresses to a customer is free of charge.  
+   - Ensure the customer’s email address is accurate before adding addresses.  
+
+2. **Modifying Addresses**  
+   - Changes to address information will take up to 48 hours to be reflected across all company systems.  
+   - Modifications to addresses are free of charge.
 
 3. **Deleting Addresses**  
-- Deleting an address takes 48 hours to process.  
-- Deleting one or more addresses is free of charge.
+   - Deleting one or more addresses may take up to 48 hours to process.  
+   - Deletion of address data is free of charge.
