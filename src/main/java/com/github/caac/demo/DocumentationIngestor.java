@@ -25,7 +25,7 @@ public class DocumentationIngestor implements CommandLineRunner {
     public DocumentationIngestor(
             EmbeddingModel embeddingModel,
             EmbeddingStore<TextSegment> embeddingStore,
-            @Value("classpath:company-terms-of-service.txt") Resource termsOfService) {
+            @Value("classpath:company-knowledge.txt") Resource termsOfService) {
         this.embeddingModel = embeddingModel;
         this.embeddingStore = embeddingStore;
         this.termsOfService = termsOfService;
