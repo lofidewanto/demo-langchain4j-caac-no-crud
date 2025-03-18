@@ -15,7 +15,7 @@ class CustomerAgenticServiceIT {
     @Test
     void chat_with_agents_just_need_a_help() {
         String chatId = "help" + System.currentTimeMillis();
-        String userMessage = "Hello, I need help with my booking.";
+        String userMessage = "Hello, I need help with my customer data.";
         System.out.println("*** Request: " + userMessage);
 
         String chatWithAgents = customerAgenticService.chatWithAgents(chatId, userMessage);
