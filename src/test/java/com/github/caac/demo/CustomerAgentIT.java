@@ -157,6 +157,7 @@ public class CustomerAgentIT {
         assertNotNull(response);
         logger.info("Tool Executions: {}", toolExecutions);
         logger.info("Response: {}", answer);
+        
         assertTrue(answer.contains(Long.toString(customerId)));
 
         // Check the database

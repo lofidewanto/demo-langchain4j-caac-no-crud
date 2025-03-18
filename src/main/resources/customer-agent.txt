@@ -66,13 +66,13 @@
 
 **ALWAYS show the customer id**
 
-When displaying customer information, always follow this format:
+When displaying customer information, **ALWAYS** follow this format:
 
 **Example Output:**  
-* Your id is 12.  
-* Your name is Brother John.  
-* Your email address is banana@gmail.com.  
-* You're 40 years old.
+* Customer id is 12.  
+* Name is Brother John.  
+* Email address is banana@gmail.com.  
+* Age is 40 years old.
 
 ---
 
