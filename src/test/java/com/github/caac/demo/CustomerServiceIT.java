@@ -14,12 +14,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerServiceIT {
 
     private final String email = "john.doe@example.com";
+    
     @Autowired
-    private CustomerService customerService;
+    CustomerService customerService;
+    
     @Autowired
-    private CustomerRepository customerRepository;
+    CustomerRepository customerRepository;
 
-    private void createTestCustomer() {
+    void createTestCustomer() {
         Customer customer = new Customer();
         customer.setName("Brother John");
         customer.setAge(40);
@@ -28,7 +30,7 @@ class CustomerServiceIT {
         customerRepository.save(customer);
     }
 
-    private void deleteTestCustomer() {
+    void deleteTestCustomer() {
         customerRepository.deleteAllInBatch();
     }
 

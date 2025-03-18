@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class CustomerAgentIT {
+class CustomerAgentIT {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerAgentIT.class);
 
@@ -24,15 +24,15 @@ public class CustomerAgentIT {
     private final String appleEmail ="apple@gmail.com";
 
     @Autowired
-    private CustomerAgent customerAgent;
+    CustomerAgent customerAgent;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    CustomerRepository customerRepository;
 
     @Autowired
-    private AddressRepository addressRepository;
+    AddressRepository addressRepository;
 
-    private Customer createTestCustomer1() {
+    Customer createTestCustomer1() {
         Customer customer = new Customer();
         customer.setName("Brother John");
         customer.setAge(40);
@@ -49,7 +49,7 @@ public class CustomerAgentIT {
         return customerRepository.save(customer);
     }
 
-    private Customer createTestCustomer2() {
+    Customer createTestCustomer2() {
         Customer customer = new Customer();
         customer.setName("Junie Tjahaja");
         customer.setAge(50);
@@ -66,13 +66,13 @@ public class CustomerAgentIT {
         return customerRepository.save(customer);
     }
 
-    private void deleteTestCustomer() {
+    void deleteTestCustomer() {
         addressRepository.deleteAllInBatch();
         customerRepository.deleteAllInBatch();
     }
 
     @Test
-    public void simple_chat() {
+    void simple_chat() {
         String chatId = "test-chat-id" + System.currentTimeMillis();
         String userMessage = "Hello, how are you?";
 
@@ -86,7 +86,7 @@ public class CustomerAgentIT {
     }
 
     @Test
-    public void simple_chat_who() {
+    void simple_chat_who() {
         String chatId = "test-chat-id" + System.currentTimeMillis();
         String userMessage = "Hello, who are you?";
 
@@ -102,7 +102,7 @@ public class CustomerAgentIT {
 
     @Test
     @Transactional
-    public void create_simple_customer_chat() {
+    void create_simple_customer_chat() {
         createTestCustomer1();
 
         String chatId = "test-chat-id" + System.currentTimeMillis();
@@ -121,8 +121,12 @@ public class CustomerAgentIT {
 
         assertNotNull(response);
 
-        String answer = response.content();
+        String answer = response.content().toLowerCase();
         logger.info("Response: {}", answer);
+
+        assertTrue(answer.contains("Customer".toLowerCase()));
+        assertTrue(answer.contains("created".toLowerCase()));
+
         List<ToolExecution> toolExecutions = response.toolExecutions();
         logger.info("Tool Executions: {}", toolExecutions);
 
@@ -137,7 +141,7 @@ public class CustomerAgentIT {
 
     @Test
     @Transactional
-    public void find_customer_by_id() {
+    void find_customer_by_id() {
         Customer customer = createTestCustomer1();
         Long customerId = customer.getId();
 
@@ -171,7 +175,7 @@ public class CustomerAgentIT {
 
     @Test
     @Transactional
-    public void find_customer_by_email() {
+    void find_customer_by_email() {
         createTestCustomer1();
 
         String chatId = "test-chat-id" + System.currentTimeMillis();
@@ -198,7 +202,7 @@ public class CustomerAgentIT {
     }
 
     @Test
-    public void null_chat() {
+    void null_chat() {
         String chatId = "test-chat-id" + System.currentTimeMillis();
         String userMessage = null;
 
@@ -213,7 +217,7 @@ public class CustomerAgentIT {
 
     @Test
     @Transactional
-    public void find_all_customers() {
+    void find_all_customers() {
         createTestCustomer1();
         createTestCustomer2();
 

@@ -28,12 +28,14 @@ public class ApplicationConfig {
             @Value("${langchain4j.ollama.chat-model.customer.base-url}") String baseUrl,
             @Value("${langchain4j.ollama.chat-model.customer.model-name}") String modelName,
             @Value("${langchain4j.ollama.chat-model.customer.log-requests}") boolean logRequests,
-            @Value("${langchain4j.ollama.chat-model.customer.log-responses}") boolean logResponses) {
+            @Value("${langchain4j.ollama.chat-model.customer.log-responses}") boolean logResponses,
+            @Value("${langchain4j.ollama.chat-model.customer.temperature}") double temperature) {
         return OllamaChatModel.builder()
                 .baseUrl(baseUrl)
                 .modelName(modelName)
                 .logRequests(logRequests)
                 .logResponses(logResponses)
+                .temperature(temperature)
                 .build();
     }
 
@@ -42,12 +44,14 @@ public class ApplicationConfig {
             @Value("${langchain4j.ollama.chat-model.protector.base-url}") String baseUrl,
             @Value("${langchain4j.ollama.chat-model.protector.model-name}") String modelName,
             @Value("${langchain4j.ollama.chat-model.protector.log-requests}") boolean logRequests,
-            @Value("${langchain4j.ollama.chat-model.protector.log-responses}") boolean logResponses) {
+            @Value("${langchain4j.ollama.chat-model.protector.log-responses}") boolean logResponses,
+            @Value("${langchain4j.ollama.chat-model.protector.temperature}") double temperature) {
         return OllamaChatModel.builder()
                 .baseUrl(baseUrl)
                 .modelName(modelName)
                 .logRequests(logRequests)
                 .logResponses(logResponses)
+                .temperature(temperature)
                 .build();
     }
 

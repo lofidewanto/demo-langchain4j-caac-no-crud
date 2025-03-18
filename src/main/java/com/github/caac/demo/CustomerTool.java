@@ -78,13 +78,13 @@ public class CustomerTool {
             created customer.
             """)
     public CustomerDto createCustomer(CustomerDto arg0) {
-        if (arg0.getName() == null || arg0.getEmail() == null || arg0.getAge() == 0) {
+        if (arg0.name() == null || arg0.email() == null || arg0.age() == 0) {
             throw new IllegalArgumentException("Customer name, email and age cannot be null.");
         }
 
-        logger.info("createCustomer with parameter: " + arg0.getName() + ", " + arg0.getEmail() + ", " + arg0.getAge());
+        logger.info("createCustomer with parameter: " + arg0.name() + ", " + arg0.email() + ", " + arg0.age());
 
-        Customer customer = new Customer(arg0.getEmail(), arg0.getName(), arg0.getAge());
+        Customer customer = new Customer(arg0.email(), arg0.name(), arg0.age());
         Customer savedCustomer = customerRepository.save(customer);
 
         return new CustomerDto(savedCustomer.getId(), savedCustomer.getName(), savedCustomer.getAge(),
