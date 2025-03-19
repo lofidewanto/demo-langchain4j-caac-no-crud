@@ -1,7 +1,13 @@
 package com.github.caac.demo;
 
-import dev.langchain4j.service.Result;
-import dev.langchain4j.service.tool.ToolExecution;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,10 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
+import dev.langchain4j.service.Result;
+import dev.langchain4j.service.tool.ToolExecution;
 
 @SpringBootTest
 class CustomerAgentIT {
@@ -240,5 +244,28 @@ class CustomerAgentIT {
         assertEquals(count, 2);
 
         deleteTestCustomer();
+    }
+
+    @Test
+    void check_company_knowledge_base() {
+        String chatId = "check_company_knowledge_base" + System.currentTimeMillis();
+        String userMessage = "Hello, can you tell me who are you and for what company are you working? I need to know your history.";
+
+        logger.info("*** Request: {}", userMessage);
+
+        Result<String> response = customerAgent.chat(chatId, userMessage);
+
+        String answer = response.content();
+
+        assertNotNull(response);
+
+        logger.info("*** Response: {}", answer);
+
+        assertTrue(answer.contains("Mila"));
+        assertTrue(answer.contains("DieSoon"));
+        assertTrue(answer.contains("5"));
+        assertTrue(answer.contains("household"));
+        assertTrue(answer.contains("2001"));
+        assertTrue(answer.contains("www.diesoon.com"));
     }
 }

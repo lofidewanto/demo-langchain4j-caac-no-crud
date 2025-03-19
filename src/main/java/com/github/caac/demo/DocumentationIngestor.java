@@ -1,5 +1,7 @@
 package com.github.caac.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.Resource;
@@ -18,22 +20,28 @@ import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 @Component
 public class DocumentationIngestor implements CommandLineRunner {
 
+    private static Logger logger = LoggerFactory.getLogger(DocumentationIngestor.class);
+
     private final EmbeddingModel embeddingModel;
+
     private final EmbeddingStore<TextSegment> embeddingStore;
-    private final Resource termsOfService;
+
+    private final Resource companyKnowledge;
 
     public DocumentationIngestor(
             EmbeddingModel embeddingModel,
             EmbeddingStore<TextSegment> embeddingStore,
-            @Value("classpath:company-knowledge.txt") Resource termsOfService) {
+            @Value("classpath:company-knowledge.txt") Resource companyKnowledge) {
         this.embeddingModel = embeddingModel;
         this.embeddingStore = embeddingStore;
-        this.termsOfService = termsOfService;
+        this.companyKnowledge = companyKnowledge;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        var doc = FileSystemDocumentLoader.loadDocument(termsOfService.getFile().toPath());
+        logger.info("Ingesting the knowledge base...");
+
+        var doc = FileSystemDocumentLoader.loadDocument(companyKnowledge.getFile().toPath());
         var ingestor = EmbeddingStoreIngestor.builder()
                 .documentSplitter(DocumentSplitters.recursive(50, 0))
                 .embeddingModel(embeddingModel)

@@ -47,7 +47,23 @@ class CustomerAgenticServiceIT {
         System.out.println("*** Response: " + chatWithAgents);
 
         // Assertions can be added here to validate the behavior
+    }
 
+    @Test
+    void chat_with_agents_asking_history() {
+        String chatId = "chat_with_agents_asking_history" + System.currentTimeMillis();
+        String userMessage = "Hello, can you tell me who are you and for what company are you working? I need to know your history.";
+        System.out.println("*** Request: " + userMessage);
 
+        String chatWithAgents = customerAgenticService.chatWithAgents(chatId, userMessage);
+        System.out.println("*** Response: " + chatWithAgents);
+
+        // Assertions can be added here to validate the behavior
+        assertTrue(chatWithAgents.toLowerCase().contains("Mila".toLowerCase()));
+        assertTrue(chatWithAgents.toLowerCase().contains("DieSoon".toLowerCase()));
+        assertTrue(chatWithAgents.toLowerCase().contains("5".toLowerCase()));
+        assertTrue(chatWithAgents.toLowerCase().contains("household".toLowerCase()));
+        assertTrue(chatWithAgents.toLowerCase().contains("2001".toLowerCase()));
+        assertTrue(chatWithAgents.toLowerCase().contains("www.diesoon.com".toLowerCase()));
     }
 }

@@ -14,6 +14,7 @@
 - **Specialization**: Managing customer data (email, name, age) and addresses  
 - **Persona**: Friendly, helpful, joyful, empathetic, and efficient  
 - **Core Values**: Customer satisfaction, empathy, efficiency, technical expertise, and clear communication
+- **Working Experience**: five years in customer support
 
 ---
 
