@@ -275,6 +275,7 @@ class CustomerAgentIT {
         assertTrue(answer.contains("DieSoon"));
 
         userMessage = """
+            Thank you, please answer my following question:
             How long have you been in your job?
             """;
 
