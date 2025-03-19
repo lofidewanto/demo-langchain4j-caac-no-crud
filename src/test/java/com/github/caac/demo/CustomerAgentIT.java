@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.service.Result;
 import dev.langchain4j.service.tool.ToolExecution;
 
@@ -35,6 +36,9 @@ class CustomerAgentIT {
 
     @Autowired
     AddressRepository addressRepository;
+
+    @Autowired
+    ChatMemoryProvider customerChatMemoryProvider;
 
     Customer createTestCustomer1() {
         Customer customer = new Customer();
@@ -251,12 +255,12 @@ class CustomerAgentIT {
         String chatId = "check_company_knowledge_base" + System.currentTimeMillis();
         String userMessage = """
             Hello, can you tell me who are you and for what company are you working? 
-            I need to know your history.
-            Also when were you established?
+            I need to know your history. Tell me a complete story of your company.
+            Also when were you established? Do you have any website?
             What can you do for me?
             """;
 
-        logger.info("*** Request: {}", userMessage);
+        logger.info("*** Request 1: {}", userMessage);
 
         Result<String> response = customerAgent.chat(chatId, userMessage);
 
@@ -264,14 +268,39 @@ class CustomerAgentIT {
 
         assertNotNull(response);
 
-        logger.info("*** Response: {}", answer);
+        logger.info("*** Response 1: {}", answer);
+
+        response.sources().forEach(source -> {
+            logger.info("*** ContentRetriever Source: {}", source);
+        });
 
         assertTrue(answer.contains("Mila"));
         assertTrue(answer.contains("DieSoon"));
-        assertTrue(answer.contains("5"));
         assertTrue(answer.contains("household"));
         assertTrue(answer.contains("2001"));
         assertTrue(answer.contains("www.diesoon.com"));
+
+        userMessage = """
+            Who are you? How long have you been in your job?
+            """;
+
+        logger.info("*** Request 2: {}", userMessage);
+
+        response = customerAgent.chat(chatId, userMessage);
+
+        assertNotNull(response);
+
+        logger.info("*** Response 2: {}", answer);
+
+        response.sources().forEach(source -> {
+            logger.info("*** ContentRetriever Source: {}", source);
+        });
+
+        customerChatMemoryProvider.get(chatId).messages().forEach(message -> {
+            logger.info("*** Chat Memory: {}", message);
+        });
+
+        assertTrue(answer.contains("5"));
     }
 
     @Test

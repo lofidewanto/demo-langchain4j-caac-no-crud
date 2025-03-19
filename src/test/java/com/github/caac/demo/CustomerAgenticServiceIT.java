@@ -59,11 +59,11 @@ class CustomerAgenticServiceIT {
         System.out.println("*** Response: " + chatWithAgents);
 
         // Assertions can be added here to validate the behavior
-        assertTrue(chatWithAgents.toLowerCase().contains("Mila".toLowerCase()));
-        assertTrue(chatWithAgents.toLowerCase().contains("DieSoon".toLowerCase()));
-        assertTrue(chatWithAgents.toLowerCase().contains("5".toLowerCase()));
-        assertTrue(chatWithAgents.toLowerCase().contains("household".toLowerCase()));
-        assertTrue(chatWithAgents.toLowerCase().contains("2001".toLowerCase()));
-        assertTrue(chatWithAgents.toLowerCase().contains("www.diesoon.com".toLowerCase()));
+        assertTrue(chatWithAgents.contains("Mila"));
+        assertTrue(chatWithAgents.contains("DieSoon"));
+        assertTrue(chatWithAgents.contains("5"));
+        assertTrue(chatWithAgents.contains("household"));
+        assertTrue(chatWithAgents.contains("2001"));
+        assertTrue(chatWithAgents.contains("www.diesoon.com"));
     }
 }
