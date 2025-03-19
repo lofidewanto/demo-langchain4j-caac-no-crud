@@ -52,7 +52,9 @@ class CustomerAgenticServiceIT {
     @Test
     void chat_with_agents_asking_history() {
         String chatId = "chat_with_agents_asking_history" + System.currentTimeMillis();
-        String userMessage = "Hello, can you tell me who are you and for what company are you working? I need to know your history.";
+        String userMessage = """
+            Hello, can you tell me who are you and for what company are you working? I need to know your history.
+            """;
         System.out.println("*** Request: " + userMessage);
 
         String chatWithAgents = customerAgenticService.chatWithAgents(chatId, userMessage);
