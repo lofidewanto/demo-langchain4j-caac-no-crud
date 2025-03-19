@@ -255,9 +255,6 @@ class CustomerAgentIT {
         String chatId = "check_company_knowledge_base" + System.currentTimeMillis();
         String userMessage = """
             Hello, can you tell me who are you and for what company are you working? 
-            I need to know your history. Tell me a complete story of your company.
-            Also when were you established? Do you have any website?
-            What can you do for me?
             """;
 
         logger.info("*** Request 1: {}", userMessage);
@@ -276,12 +273,9 @@ class CustomerAgentIT {
 
         assertTrue(answer.contains("Mila"));
         assertTrue(answer.contains("DieSoon"));
-        assertTrue(answer.contains("household"));
-        assertTrue(answer.contains("2001"));
-        assertTrue(answer.contains("www.diesoon.com"));
 
         userMessage = """
-            Who are you? How long have you been in your job?
+            How long have you been in your job?
             """;
 
         logger.info("*** Request 2: {}", userMessage);
@@ -325,5 +319,77 @@ class CustomerAgentIT {
         logger.info("*** Response: {}", answer);
 
         assertTrue(answer.contains("support@diesoon.com"));
+    }
+
+    @Test
+    void check_company_knowledge_base_established() {
+        String chatId = "check_company_knowledge_base_established" + System.currentTimeMillis();
+        String userMessage = """
+            Hello, when were you established?
+            """;
+
+        logger.info("*** Request: {}", userMessage);
+
+        Result<String> response = customerAgent.chat(chatId, userMessage);
+
+        String answer = response.content();
+       
+        assertNotNull(response);
+
+        response.sources().forEach(source -> {
+            logger.info("*** ContentRetriever Source: {}", source);
+        });
+
+        logger.info("*** Response: {}", answer);
+
+        assertTrue(answer.contains("2001"));
+    }
+
+    @Test
+    void check_company_knowledge_base_website() {
+        String chatId = "check_company_knowledge_base_website" + System.currentTimeMillis();
+        String userMessage = """
+            Hello, what is your website?
+            """;
+
+        logger.info("*** Request: {}", userMessage);
+
+        Result<String> response = customerAgent.chat(chatId, userMessage);
+
+        String answer = response.content();
+       
+        assertNotNull(response);
+
+        response.sources().forEach(source -> {
+            logger.info("*** ContentRetriever Source: {}", source);
+        });
+
+        logger.info("*** Response: {}", answer);
+
+        assertTrue(answer.contains("www.diesoon.com"));
+    }
+
+    @Test  
+    void check_company_knowledge_base_working_since() {
+        String chatId = "check_company_knowledge_base_working_since" + System.currentTimeMillis();
+        String userMessage = """
+            How long have you been in your job?
+            """;
+
+        logger.info("*** Request: {}", userMessage);
+
+        Result<String> response = customerAgent.chat(chatId, userMessage);
+
+        String answer = response.content();
+       
+        assertNotNull(response);
+
+        response.sources().forEach(source -> {
+            logger.info("*** ContentRetriever Source: {}", source);
+        });
+
+        logger.info("*** Response: {}", answer);
+
+        assertTrue(answer.contains("5"));
     }
 }

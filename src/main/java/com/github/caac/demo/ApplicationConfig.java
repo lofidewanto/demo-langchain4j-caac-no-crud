@@ -83,8 +83,8 @@ public class ApplicationConfig {
         return EmbeddingStoreContentRetriever.builder()
                 .embeddingStore(embeddingStore)
                 .embeddingModel(embeddingModel)
-                .maxResults(2)
-                .minScore(0.6)
+                .maxResults(5)
+                .minScore(0.9)
                 .build();
     }
 
