@@ -54,6 +54,12 @@ class CustomerAgenticServiceIT {
         String chatId = "chat_with_agents_asking_history" + System.currentTimeMillis();
         String userMessage = """
             Hello, can you tell me who are you and for what company are you working? I need to know your history.
+            Tell me about following information:
+            1. Your website?
+            2. When was your company founded?
+            3. What is your company's main business?
+            4. Your email address?
+            5. How long have you worked in this company?
             """;
         System.out.println("*** Request: " + userMessage);
 
@@ -63,7 +69,7 @@ class CustomerAgenticServiceIT {
         // Assertions can be added here to validate the behavior
         assertTrue(chatWithAgents.contains("Mila"));
         assertTrue(chatWithAgents.contains("DieSoon"));
-        assertTrue(chatWithAgents.contains("5"));
+        assertTrue(chatWithAgents.contains("five years"));
         assertTrue(chatWithAgents.contains("household"));
         assertTrue(chatWithAgents.contains("2001"));
         assertTrue(chatWithAgents.contains("www.diesoon.com"));
