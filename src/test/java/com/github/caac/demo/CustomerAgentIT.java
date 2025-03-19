@@ -249,7 +249,12 @@ class CustomerAgentIT {
     @Test
     void check_company_knowledge_base() {
         String chatId = "check_company_knowledge_base" + System.currentTimeMillis();
-        String userMessage = "Hello, can you tell me who are you and for what company are you working? I need to know your history.";
+        String userMessage = """
+            Hello, can you tell me who are you and for what company are you working? 
+            I need to know your history.
+            Also when were you established?
+            What can you do for me?
+            """;
 
         logger.info("*** Request: {}", userMessage);
 
@@ -267,5 +272,29 @@ class CustomerAgentIT {
         assertTrue(answer.contains("household"));
         assertTrue(answer.contains("2001"));
         assertTrue(answer.contains("www.diesoon.com"));
+    }
+
+    @Test
+    void check_company_knowledge_base_email() {
+        String chatId = "check_company_knowledge_base_email" + System.currentTimeMillis();
+        String userMessage = """
+            Hello, can you tell me what is your email address?
+            """;
+
+        logger.info("*** Request: {}", userMessage);
+
+        Result<String> response = customerAgent.chat(chatId, userMessage);
+
+        String answer = response.content();
+       
+        assertNotNull(response);
+
+        response.sources().forEach(source -> {
+            logger.info("*** ContentRetriever Source: {}", source);
+        });
+
+        logger.info("*** Response: {}", answer);
+
+        assertTrue(answer.contains("support@diesoon.com"));
     }
 }
