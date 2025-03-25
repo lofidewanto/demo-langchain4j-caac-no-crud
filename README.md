@@ -17,11 +17,13 @@ H2 Console: http://localhost:8080/caac/h2-console
 # The Story
 What kind of company this is and what kind of support this company offers are described in these two text files.
 
-1. Company Rules
+Company: DieSoon, household appliances company, established in 2001 
+
+1. Mila: our lovely customer support agent 
 src/main/resources/customer-agent.txt
 
-2. Company Terms of Service
-src/main/resources/company-terms-of-service.txt
+2. DieSoon Knowledge Management
+src/main/resources/company-knowledge.txt
 
 # Chat and conversation with the CaaC (Chat as Code) Business Logics
 - Print all data of following customer: john@gmail.com 
