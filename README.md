@@ -19,9 +19,9 @@ What kind of company this is and what kind of support this company offers are de
 
 Company: DieSoon, household appliances company, established in 2001 
 
-1. Mila: our lovely customer support agent: src/main/resources/customer-agent.txt
+1. Mila: our lovely customer support agent: [src/main/resources/customer-agent.txt](https://github.com/lofidewanto/demo-langchain4j-caac-no-crud/blob/main/src/main/resources/customer-agent.txt)
 
-2. DieSoon Knowledge Management: src/main/resources/company-knowledge.txt
+2. DieSoon Knowledge Management: [src/main/resources/company-knowledge.txt](https://github.com/lofidewanto/demo-langchain4j-caac-no-crud/blob/main/src/main/resources/company-knowledge.txt)
 
 # Chat and conversation with the CaaC (Chat as Code) Business Logics
 - Print all data of following customer: john@gmail.com 
