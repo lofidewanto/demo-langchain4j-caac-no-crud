@@ -28,8 +28,13 @@ Company: DieSoon, household appliances company, established in 2001
 2. DieSoon Knowledge Management: [src/main/resources/company-knowledge.txt](https://github.com/lofidewanto/demo-langchain4j-caac-no-crud/blob/main/src/main/resources/company-knowledge.txt)
 
 # Chat and conversation with the CaaC (Chat as Code) Business Logics
+
 (1)
-Print all data of following customer: john@gmail.com 
+I'm new here and please create a new customer data for me.\n 
+My email is hello@gmail.com.\n 
+My name is John Doe.\n 
+My address is 1234 Main Street, New York, NY 10001.\n 
+I'm 30 years old.
 
 (2)
-I'm new here and please create a new customer data for me. My email is hello@gmail.com. My name is John Doe. My address is 1234 Main Street, New York, NY 10001. I'm 30 years old.
+Print all data of following customer: hello@gmail.com 
