@@ -14,6 +14,10 @@ For the CRUD operations, we are using the H2 in-memory database. If you want to 
 
 H2 Console: http://localhost:8080/caac/h2-console
 
+# Run the Swagger UI
+
+Swagger UI: http://localhost:8080/caac/swagger-ui.html
+
 # The Story
 What kind of company this is and what kind of support this company offers are described in these two text files.
 
