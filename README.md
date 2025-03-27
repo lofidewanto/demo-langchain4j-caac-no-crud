@@ -4,9 +4,14 @@ Demo Comparison of CaaC (Chat as Code) Business Logics vs. CRUD (Create Read Upd
 # Install and run Ollama first
 https://ollama.com
 
-# Run the application
+# Run the application as CLI
 ```
 mvn spring-boot:run -Dspring-boot.run.arguments=chat-id
+```
+
+# Run the application as Web
+```
+mvn spring-boot:run
 ```
 
 # Run the database user interface

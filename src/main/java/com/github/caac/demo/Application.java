@@ -38,9 +38,8 @@ public class Application implements CommandLineRunner {
         // args = new String[] { "chat-id" };
 
         if (args.length <= 0) {
-            logger.info("Usage: java -jar demo-langchain4j-caac-no-crud-0.0.1-SNAPSHOT.jar <chat-id>");
-
-            // deleteTestCustomer();
+            logger.info("CLI Usage: java -jar demo-langchain4j-caac-no-crud-0.0.1-SNAPSHOT.jar <chat-id>");
+            logger.info("Running as a Web application...");
 
             return;
         }
@@ -84,7 +83,4 @@ public class Application implements CommandLineRunner {
         customerService.createCustomerWithAddress(customer, List.of(address));
     }
 
-    private void deleteTestCustomer() {
-        customerService.deleteAllCustomers();
-    }
 }
