@@ -47,7 +47,7 @@ public class CustomerController {
 
     @PostMapping("/customer_chat")
     public ResponseEntity<String> chat(String chatId, String userMessage) {
-        String responseMessage = customerAgenticService.chatWithAgents(chatId, userMessage);
+        String responseMessage = customerAgenticService.chatWithAgentsWithoutProtection(chatId, userMessage);
 
         return ResponseEntity.ok()
                 .body(responseMessage);
