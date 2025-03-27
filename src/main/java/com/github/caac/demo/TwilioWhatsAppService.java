@@ -44,7 +44,7 @@ public class TwilioWhatsAppService {
 
         String to = payload.get("From");
 
-        String recommendation = customerAgenticService.chatWithAgents(from, body);
+        String recommendation = customerAgenticService.chatWithAgentsWithoutProtection(from, body);
 
         String responseMessage = """
                 %s
