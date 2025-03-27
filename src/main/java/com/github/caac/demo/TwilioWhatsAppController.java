@@ -19,21 +19,21 @@ public class TwilioWhatsAppController {
 
     private final TwilioWhatsAppService twilioWhatsAppService;
 
-    private CustomerAgenticService customerAgenticService;
+    private final CustomerAgenticService customerAgenticService;
 
     public TwilioWhatsAppController(TwilioWhatsAppService twilioWhatsAppService,
             CustomerAgenticService customerAgenticService) {
         this.twilioWhatsAppService = twilioWhatsAppService;
-        this.customerAgenticService = customerAgenticService;
+        this.customerAgenticService = customerAgenticService; 
     }
 
-    @PostMapping("/send-whatsapp")
+    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, value = "/send-whatsapp")
     public String sendWhatsAppMessage(@RequestParam("to") String to,
             @RequestParam("message") String message) {
         return twilioWhatsAppService.sendWhatsAppMessage(to, message);
     }
 
-    @PostMapping("/receive-whatsapp-simple-test")
+    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, value = "/receive-whatsapp-simple-test")
     public ResponseEntity<String> receiveWhatsAppMessage(@RequestBody MultiValuedMap<String, String> payload) {
         String from = payload.get("From").stream().findFirst().get();
         String body = payload.get("Body").stream().findFirst().get();
@@ -50,9 +50,11 @@ public class TwilioWhatsAppController {
 
         logger.info("Received message: {} from {}", body, from);
 
-        String response = customerAgenticService.chatWithAgentsWithoutProtection(from, body);
+        twilioWhatsAppService.sendWhatsAppMessageAsync(null);
 
-        String responseMessage = "<Response><Message>" + response + "</Message></Response>";
+        String waitingText = customerAgenticService.chatForWaiting(from, body);
+
+        String responseMessage = "<Response><Message>" + waitingText + "</Message></Response>";
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_XML)

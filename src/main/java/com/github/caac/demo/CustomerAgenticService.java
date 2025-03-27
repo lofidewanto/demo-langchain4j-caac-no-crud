@@ -15,10 +15,13 @@ public class CustomerAgenticService {
 
     private ProtectorAgent protectorAgent;
 
+    private TextCreatorAgent textCreatorAgent;
+
     public CustomerAgenticService(CustomerAgent customerAgent,
-            ProtectorAgent protectorAgent) {
+            ProtectorAgent protectorAgent, TextCreatorAgent textCreatorAgent) {
         this.customerAgent = customerAgent;
         this.protectorAgent = protectorAgent;
+        this.textCreatorAgent = textCreatorAgent;
     }
 
     public String chatWithAgents(String chatId, String userMessage) {
@@ -49,5 +52,11 @@ public class CustomerAgenticService {
         logger.info("*** CustomerAgent tools: {}", chatCustomer.toolExecutions());
 
         return chatCustomer.content();
+    }
+
+    public String chatForWaiting(String chatId, String userMessage) {
+        var textResult = textCreatorAgent.createWaitingText(chatId, userMessage);
+
+        return textResult.content();
     }
 }
