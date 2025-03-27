@@ -48,3 +48,5 @@ I'm 30 years old.
 
 (4)
 Hello, can you tell me who are you and for what company are you working? 
+
+You can find all the test cases in the [test folder](https://github.com/lofidewanto/demo-langchain4j-caac-no-crud/tree/main/src/test/java/com/github/caac/demo).
