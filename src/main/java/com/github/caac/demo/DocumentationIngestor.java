@@ -1,5 +1,7 @@
 package com.github.caac.demo;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,13 +30,17 @@ public class DocumentationIngestor implements CommandLineRunner {
 
     private final Resource companyKnowledge;
 
+    private final CustomerService customerService;
+
     public DocumentationIngestor(
             EmbeddingModel embeddingModel,
             EmbeddingStore<TextSegment> embeddingStore,
-            @Value("classpath:company-knowledge.txt") Resource companyKnowledge) {
+            @Value("classpath:company-knowledge.txt") Resource companyKnowledge,
+            CustomerService customerService) {
         this.embeddingModel = embeddingModel;
         this.embeddingStore = embeddingStore;
         this.companyKnowledge = companyKnowledge;
+        this.customerService = customerService; 
     }
 
     @Override
@@ -48,5 +54,23 @@ public class DocumentationIngestor implements CommandLineRunner {
                 .embeddingStore(embeddingStore)
                 .build();
         ingestor.ingest(doc);
+
+        logger.info("Adding a simple customer in the database...");
+        createTestCustomer();
+    }
+
+    private void createTestCustomer() {
+        Customer customer = new Customer();
+        customer.setName("Brandy Doe");
+        customer.setAge(40);
+        customer.setEmail("john@gmail.com");
+
+        Address address = new Address();
+        address.setStreet("1234 Main Street");
+        address.setCity("New York");
+        address.setState("NY");
+        address.setZipCode("10001");
+
+        customerService.createCustomerWithAddress(customer, List.of(address));
     }
 }
