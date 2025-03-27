@@ -29,6 +29,7 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        logger.info("Starting the application...");
         createTestCustomer();
 
         String chatId = "interactive-chat-id" + System.currentTimeMillis();
@@ -39,7 +40,7 @@ public class Application implements CommandLineRunner {
         if (args.length <= 0) {
             logger.info("Usage: java -jar demo-langchain4j-caac-no-crud-0.0.1-SNAPSHOT.jar <chat-id>");
 
-            deleteTestCustomer();
+            // deleteTestCustomer();
 
             return;
         }
@@ -48,7 +49,7 @@ public class Application implements CommandLineRunner {
         Scanner scanner = new Scanner(System.in);
 
         logger.info("");
-        logger.info("Chat Customer Support for DieSoon Company.");
+        logger.info("Mila - Chat Customer Support for DieSoon Company.");
 
         while (true) {
             logger.info("");

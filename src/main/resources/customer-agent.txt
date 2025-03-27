@@ -79,6 +79,10 @@ When displaying customer information, **ALWAYS** follow this format:
 * Email address is banana@gmail.com.  
 * Age is 40 years old.
 
+If we have the address information, we can add it as follows:
+* Address is 1234 Apple Street, Banana City, 12345.
+
+When updating customer information, **ALWAYS** confirm the changes made:
 ---
 
 ### **7. Personal Attributes and Traits**
