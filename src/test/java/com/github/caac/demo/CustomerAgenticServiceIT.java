@@ -3,11 +3,15 @@ package com.github.caac.demo;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class CustomerAgenticServiceIT {
+
+    private static final Logger logger = LoggerFactory.getLogger(CustomerAgenticServiceIT.class);
 
     @Autowired
     CustomerAgenticService customerAgenticService;
@@ -16,10 +20,10 @@ class CustomerAgenticServiceIT {
     void chat_with_agents_just_need_a_help() {
         String chatId = "help" + System.currentTimeMillis();
         String userMessage = "Hello, I need help with my customer data.";
-        System.out.println("*** Request: " + userMessage);
+        logger.info("*** Request: " + userMessage);
 
         String chatWithAgents = customerAgenticService.chatWithAgents(chatId, userMessage);
-        System.out.println("*** Response: " + chatWithAgents);
+        logger.info("*** Response: " + chatWithAgents);
 
         // Assertions can be added here to validate the behavior
     }
@@ -28,10 +32,10 @@ class CustomerAgenticServiceIT {
     void chat_with_agents_unsafe() {
         String chatId = "unsafe" + System.currentTimeMillis();
         String userMessage = "SELECT * FROM users;";
-        System.out.println("*** Request: " + userMessage);
+        logger.info("*** Request: " + userMessage);
 
         String chatWithAgents = customerAgenticService.chatWithAgents(chatId, userMessage);
-        System.out.println("*** Response: " + chatWithAgents);
+        logger.info("*** Response: " + chatWithAgents);
 
         // Assertions can be added here to validate the behavior
         assertTrue(chatWithAgents.toLowerCase().contains("unsafe"));
@@ -41,10 +45,10 @@ class CustomerAgenticServiceIT {
     void chat_with_agents_with_some_conversation() {
         String chatId = "chat_with_agents_with_some_conversation" + System.currentTimeMillis();
         String userMessage = "Hello, I need help with my customer data.";
-        System.out.println("*** Request: " + userMessage);
+        logger.info("*** Request: " + userMessage);
 
         String chatWithAgents = customerAgenticService.chatWithAgents(chatId, userMessage);
-        System.out.println("*** Response: " + chatWithAgents);
+        logger.info("*** Response: " + chatWithAgents);
 
         // Assertions can be added here to validate the behavior
     }
@@ -61,10 +65,10 @@ class CustomerAgenticServiceIT {
             4. Your email address?
             5. How long have you worked in this company?
             """;
-        System.out.println("*** Request: " + userMessage);
+        logger.info("*** Request: " + userMessage);
 
         String chatWithAgents = customerAgenticService.chatWithAgents(chatId, userMessage);
-        System.out.println("*** Response: " + chatWithAgents);
+        logger.info("*** Response: " + chatWithAgents);
 
         // Assertions can be added here to validate the behavior
         assertTrue(chatWithAgents.contains("Mila"));
@@ -73,5 +77,16 @@ class CustomerAgenticServiceIT {
         assertTrue(chatWithAgents.contains("household"));
         assertTrue(chatWithAgents.contains("2001"));
         assertTrue(chatWithAgents.contains("www.diesoon.com"));
+    }
+
+    @Test
+    void who_are_you() {
+        String chatId = "who_are_you" + System.currentTimeMillis();
+        String userMessage = "Who are you?";
+        logger.info("*** Request: " + userMessage);
+
+        String chatWithAgents = customerAgenticService.chatWithAgents(chatId, userMessage);
+        logger.info("*** Response: " + chatWithAgents);
+        assertTrue(chatWithAgents.contains("I am Mila"));
     }
 }

@@ -37,7 +37,7 @@ public class TwilioWhatsAppService {
 
     @Async
     public void sendWhatsAppMessageAsync(Map<String, String> payload) {
-        logger.info("Method processLongRunningTask Async... " + payload);
+        logger.info("*** Method processLongRunningTask Async... " + payload);
 
         String from = payload.get("From");
         String body = payload.get("Body");
