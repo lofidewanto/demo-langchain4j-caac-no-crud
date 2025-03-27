@@ -83,19 +83,19 @@ public class ApplicationConfig {
 
     @Bean
     OpenAiChatModel customerOpenAiChatModel(
+        @Value("${langchain4j.open-ai.chat-model.customer.base-url}") String baseUrl,
             @Value("${langchain4j.open-ai.chat-model.customer.model-name}") String modelName,
             @Value("${langchain4j.open-ai.chat-model.customer.log-requests}") boolean logRequests,
             @Value("${langchain4j.open-ai.chat-model.customer.log-responses}") boolean logResponses,
             @Value("${langchain4j.open-ai.chat-model.customer.temperature}") double temperature,
-            @Value("${langchain4j.open-ai.chat-model.customer.api-key}") String apiKey,
-            @Value("${langchain4j.open-ai.chat-model.customer.base-url}") String baseUrl) {
+            @Value("${langchain4j.open-ai.chat-model.customer.api-key}") String apiKey) {
         return OpenAiChatModel.builder()
+                .baseUrl(baseUrl)
                 .modelName(modelName)
                 .logRequests(logRequests)
                 .logResponses(logResponses)
                 .temperature(temperature)
                 .apiKey(apiKey)
-                .baseUrl(baseUrl)
                 .build();
     }
 
@@ -143,6 +143,6 @@ public class ApplicationConfig {
                 .info(new Info()
                         .title(applicationName)
                         .version("1.0")
-                        .description("FeedSnap Chatbot REST APIs"));
+                        .description("Mila Chatbot REST APIs"));
     }
 }

@@ -50,9 +50,9 @@ public class TwilioWhatsAppController {
 
         logger.info("Received message: {} from {}", body, from);
 
-        twilioWhatsAppService.sendWhatsAppMessageAsync(payload);
-
         String waitingText = customerAgenticService.chatForWaiting(from, body);
+
+        twilioWhatsAppService.sendWhatsAppMessageAsync(payload);
 
         String responseMessage = "<Response><Message>" + waitingText + "</Message></Response>";
 

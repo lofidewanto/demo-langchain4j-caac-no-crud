@@ -42,4 +42,28 @@ class TextCreatorAgentIT {
         assertTrue(response.content().contains("household"));
     }
 
+    @Test
+    void check_waiting_en() {
+        String chatId = "testChatId3" + System.currentTimeMillis();
+        String userMessage = "Who are you?";
+        logger.info("*** Request: " + userMessage);
+
+        Result<String> response = textCreatorAgent.createWaitingText(chatId, userMessage);
+
+        logger.info("*** Response: " + response.content());
+        assertTrue(response.content().contains("Thank"));
+    }
+
+    @Test
+    void check_waiting_de() {
+        String chatId = "testChatId4" + System.currentTimeMillis();
+        String userMessage = "Wer bist du?";
+        logger.info("*** Request: " + userMessage);
+
+        Result<String> response = textCreatorAgent.createWaitingText(chatId, userMessage);
+
+        logger.info("*** Response: " + response.content());
+        assertTrue(response.content().contains("Danke"));
+    }
+
 }
