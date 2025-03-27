@@ -43,7 +43,7 @@ public class TwilioWhatsAppController {
         return ResponseEntity.ok("Message received");
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, value = "/receive-whatsapp")
+    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, value = "/receive-async-whatsapp")
     public ResponseEntity<String> receiveMessage(@RequestParam Map<String, String> payload) {
         String from = payload.get("From");
         String body = payload.get("Body");
