@@ -9,7 +9,7 @@ import dev.langchain4j.service.spring.AiServiceWiringMode;
 
 @AiService(wiringMode = AiServiceWiringMode.EXPLICIT, 
             chatMemoryProvider = "customerChatMemoryProvider", 
-            chatModel = "customerOllamaChatModel",
+            chatModel = "customerOpenAiChatModel",
             tools = {"customerTool"},
             contentRetriever = "contentRetriever")
 public interface CustomerAgent {

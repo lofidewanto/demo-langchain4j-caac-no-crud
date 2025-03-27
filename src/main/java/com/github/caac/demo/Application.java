@@ -1,16 +1,21 @@
 package com.github.caac.demo;
 
-import dev.langchain4j.service.Result;
+import java.util.List;
+import java.util.Scanner;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.List;
-import java.util.Scanner;
+import dev.langchain4j.service.Result;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
+
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
     @Autowired
     private CustomerAgent customerAgent;
@@ -32,7 +37,7 @@ public class Application implements CommandLineRunner {
         // args = new String[] { "chat-id" };
 
         if (args.length <= 0) {
-            System.out.println("Usage: java -jar demo-langchain4j-caac-no-crud-0.0.1-SNAPSHOT.jar <chat-id>");
+            logger.info("Usage: java -jar demo-langchain4j-caac-no-crud-0.0.1-SNAPSHOT.jar <chat-id>");
 
             deleteTestCustomer();
 
@@ -42,22 +47,22 @@ public class Application implements CommandLineRunner {
         // Create an Agentic Customer Service.
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println();
-        System.out.print("Chat Customer Support for DieSoon Company.\n");
+        logger.info("");
+        logger.info("Chat Customer Support for DieSoon Company.");
 
         while (true) {
-            System.out.println();
-            System.out.print("You: ");
+            logger.info("");
+            logger.info("You: ");
             String userMessage = scanner.nextLine();
-            System.out.println();
+            logger.info("");
 
             if ("exit".equalsIgnoreCase(userMessage)) {
                 break;
             }
 
             Result<String> response = customerAgent.chat(chatId, userMessage);
-            System.out.println("Agent: " + response.content());
-            System.out.println();
+            logger.info("Agent: " + response.content());
+            logger.info("");
         }
 
         scanner.close();
