@@ -33,6 +33,13 @@ Company: DieSoon, household appliances company, established in 2001
 Print all data of following customer: john@gmail.com
 
 (2)
+I'm new here and please create a new customer for me. 
+My customer email is lolo@gmail.com.
+My customer name is Low Low. 
+I'm 30 years old.
+I have no addresses.
+
+(3)
 I'm new here and please create a new customer data for me.
 My email is hello@gmail.com.
 My name is John Doe.
