@@ -50,6 +50,24 @@ public class ApplicationConfig {
     }
 
     @Bean
+    OpenAiChatModel customerOpenAiChatModel(
+            @Value("${langchain4j.open-ai.chat-model.customer.base-url}") String baseUrl,
+            @Value("${langchain4j.open-ai.chat-model.customer.model-name}") String modelName,
+            @Value("${langchain4j.open-ai.chat-model.customer.log-requests}") boolean logRequests,
+            @Value("${langchain4j.open-ai.chat-model.customer.log-responses}") boolean logResponses,
+            @Value("${langchain4j.open-ai.chat-model.customer.temperature}") double temperature,
+            @Value("${langchain4j.open-ai.chat-model.customer.api-key}") String apiKey) {
+        return OpenAiChatModel.builder()
+                .baseUrl(baseUrl)
+                .modelName(modelName)
+                .logRequests(logRequests)
+                .logResponses(logResponses)
+                .temperature(temperature)
+                .apiKey(apiKey)
+                .build();
+    }
+
+    @Bean
     OllamaChatModel protectorOllamaChatModel(
             @Value("${langchain4j.ollama.chat-model.protector.base-url}") String baseUrl,
             @Value("${langchain4j.ollama.chat-model.protector.model-name}") String modelName,
@@ -82,31 +100,13 @@ public class ApplicationConfig {
     }
 
     @Bean
-    OpenAiChatModel customerOpenAiChatModel(
-        @Value("${langchain4j.open-ai.chat-model.customer.base-url}") String baseUrl,
-            @Value("${langchain4j.open-ai.chat-model.customer.model-name}") String modelName,
-            @Value("${langchain4j.open-ai.chat-model.customer.log-requests}") boolean logRequests,
-            @Value("${langchain4j.open-ai.chat-model.customer.log-responses}") boolean logResponses,
-            @Value("${langchain4j.open-ai.chat-model.customer.temperature}") double temperature,
-            @Value("${langchain4j.open-ai.chat-model.customer.api-key}") String apiKey) {
-        return OpenAiChatModel.builder()
-                .baseUrl(baseUrl)
-                .modelName(modelName)
-                .logRequests(logRequests)
-                .logResponses(logResponses)
-                .temperature(temperature)
-                .apiKey(apiKey)
-                .build();
-    }
-
-    @Bean
     ChatMemoryProvider customerChatMemoryProvider() {
         return chatId -> MessageWindowChatMemory.withMaxMessages(10);
     }
 
     @Bean
     ChatMemoryProvider protectorChatMemoryProvider() {
-        return chatId -> MessageWindowChatMemory.withMaxMessages(10);
+        return chatId -> MessageWindowChatMemory.withMaxMessages(1);
     }
 
     @Bean

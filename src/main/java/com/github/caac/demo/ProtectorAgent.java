@@ -11,6 +11,6 @@ import dev.langchain4j.service.spring.AiServiceWiringMode;
             chatModel = "protectorOllamaChatModel")
 public interface ProtectorAgent {
 
-    @SystemMessage(fromResource = "protector-agent.txt")
+    // @SystemMessage(fromResource = "protector-agent.txt")
     String check(@MemoryId String chatId, @UserMessage String userMessage);
 }

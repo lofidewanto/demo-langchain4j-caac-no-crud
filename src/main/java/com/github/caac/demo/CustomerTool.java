@@ -46,10 +46,10 @@ public class CustomerTool {
     @Tool("""
             Retrieves a customer by the customer id.
             """)
-    public CustomerDto getCustomerById(@NotNull(message = "Customer ID cannot be null.") Long arg0) {
-        logger.info("getCustomerById parameter: " + arg0);
+    public CustomerDto getCustomerById(@NotNull(message = "Customer ID cannot be null.") Long customerId) {
+        logger.info("getCustomerById parameter: " + customerId);
 
-        var customer = customerRepository.findById(arg0).get();
+        var customer = customerRepository.findById(customerId).get();
 
         var addressDtoList = customer.getAddresses().stream().map(a ->
                 new AddressDto(a.getId(), a.getStreet(), a.getCity(), a.getState(), a.getZipCode())).toList();
@@ -61,10 +61,10 @@ public class CustomerTool {
     @Tool("""
             Retrieves a customer by the email.
             """)
-    public CustomerDto getCustomerByEmail(@NotNull(message = "Customer email cannot be null.") String arg0) {
-        logger.info("getCustomerByEmail parameter: " + arg0);
+    public CustomerDto getCustomerByEmail(@NotNull(message = "Customer email cannot be null.") String customerEmail) {
+        logger.info("getCustomerByEmail parameter: " + customerEmail);
 
-        var customer = customerRepository.findByEmail(arg0).get();
+        var customer = customerRepository.findByEmail(customerEmail).get();
 
         var addressDtoList = customer.getAddresses().stream().map(a ->
                 new AddressDto(a.getId(), a.getStreet(), a.getCity(), a.getState(), a.getZipCode())).toList();
@@ -77,14 +77,14 @@ public class CustomerTool {
             Creates a new customer and returns the 
             created customer.
             """)
-    public CustomerDto createCustomer(CustomerDto arg0) {
-        if (arg0.name() == null || arg0.email() == null || arg0.age() == 0) {
+    public CustomerDto createCustomer(CustomerDto customerDto) {
+        if (customerDto.name() == null || customerDto.email() == null || customerDto.age() == 0) {
             throw new IllegalArgumentException("Customer name, email and age cannot be null.");
         }
 
-        logger.info("createCustomer with parameter: " + arg0.name() + ", " + arg0.email() + ", " + arg0.age());
+        logger.info("createCustomer with parameter: " + customerDto.name() + ", " + customerDto.email() + ", " + customerDto.age());
 
-        Customer customer = new Customer(arg0.email(), arg0.name(), arg0.age());
+        Customer customer = new Customer(customerDto.email(), customerDto.name(), customerDto.age());
         Customer savedCustomer = customerRepository.save(customer);
 
         return new CustomerDto(savedCustomer.getId(), savedCustomer.getName(), savedCustomer.getAge(),
