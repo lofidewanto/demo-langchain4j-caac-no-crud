@@ -111,7 +111,7 @@ public class ApplicationConfig {
 
     @Bean
     ChatMemoryProvider textCreatorChatMemoryProvider() {
-        return chatId -> MessageWindowChatMemory.withMaxMessages(10);
+        return chatId -> MessageWindowChatMemory.withMaxMessages(1);
     }
 
     @Bean
