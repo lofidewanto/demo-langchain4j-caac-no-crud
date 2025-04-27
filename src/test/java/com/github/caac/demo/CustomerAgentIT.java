@@ -244,8 +244,9 @@ class CustomerAgentIT {
         logger.info("*** Response: {}", answer);
 
         // Check the database
+        // 3 customers, one created by the application
         long count = customerRepository.count();
-        assertEquals(count, 2);
+        assertEquals(3, count);
 
         deleteTestCustomer();
     }
